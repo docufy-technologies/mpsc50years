@@ -6,4 +6,5 @@ The system offers,
 3. Information displayed via public facing pages
 
 Author:  Docufy <info@docufybd.com>
+
 License: See [License](./LICENSE) file.
