@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
 import AnimatedButton from "#/components/ui/animated-button";
+import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
 
 const IMAGES = [
   { src: "https://picsum.photos/seed/hero1/1200/675", alt: "Hero image 1" },
@@ -20,18 +20,25 @@ function Home() {
     <div className="h-screen flex items-center justify-center">
       <TiltedGridHero
         images={IMAGES}
-        className="h-[75dvh] w-full bg-background"
+        className="h-[60dvh] md:h-[75dvh] w-full bg-background"
       >
-        <div className="relative z-10 flex h-full flex-col items-center text-center max-w-3xl mx-auto gap-2 py-20">
-          <h1>
-            Celebrating <span className="text-accent">Golden Jubilee</span>
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            50 years of Mohammadpur Preparatory School & College (MPSC)
-          </p>
-          <AnimatedButton className="uppercase">
-            register for the event
-          </AnimatedButton>
+        <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto md:py-20">
+          <div className="w-full flex flex-col items-center gap-2 pt-8 md:pt-16">
+            <h1>
+              Celebrating <span className="text-accent">Golden Jubilee</span>
+            </h1>
+            <p className="text-muted-foreground">
+              50 years of Mohammadpur Preparatory School & College (MPSC)
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
+              reserve your spot for the get-together by clicking the button
+            </small>
+            <AnimatedButton className="uppercase">
+              register for the event
+            </AnimatedButton>
+          </div>
         </div>
       </TiltedGridHero>
     </div>
