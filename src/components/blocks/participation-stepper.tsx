@@ -29,7 +29,7 @@ export function ParticipationStepper({
           <li key={step.title} className="min-w-0">
             {/* Step indicator and connecting line */}
             <div className="mb-5 flex items-center">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-foreground text-base font-semibold text-background">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-base font-semibold text-primary-foreground">
                 {stepNumber}
               </div>
 

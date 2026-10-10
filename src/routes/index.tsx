@@ -60,7 +60,7 @@ function WorkTogether({
           >
             <span className="block overflow-hidden">
               <span className="block text-foreground transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[-8%]">
-                Let's celebrate
+                Let's <span className="text-accent">celebrate</span>
               </span>
             </span>
             <span className="block overflow-hidden">
@@ -92,10 +92,13 @@ function Home() {
       <section id="hero" className="h-screen flex items-center justify-center">
         <TiltedGridHero
           images={images}
-          className="h-[60dvh] md:h-[75dvh] w-full bg-background"
+          className="h-[75dvh] w-full bg-background"
         >
-          <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto md:py-10">
-            <div className="w-full flex flex-col items-center gap-2 pt-8 md:pt-24">
+          <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto py-4">
+            <div className="w-full flex flex-col items-center gap-2 md:pt-12">
+              <div className="flex items-center justify-center gap-2">
+                <img src="/logo.png" alt="MPSC Logo" className="h-20" />
+              </div>
               <h1>
                 Celebrating <span className="text-accent">Golden Jubilee</span>
               </h1>
@@ -104,6 +107,10 @@ function Home() {
               </p>
             </div>
             <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-2">
+                <img src="/mpsc.png" alt="MPSC Logo" className="h-14" />
+                <small>Organizer</small>
+              </div>
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
                 Reserve your spot for the get-together by clicking the button
               </small>
