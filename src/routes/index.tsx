@@ -24,7 +24,7 @@ function Home() {
       >
         <div className="relative z-10 flex h-full flex-col items-center text-center max-w-3xl mx-auto gap-2 py-20">
           <h1>
-            Celebrating <span className="text-primary">Golden Jubilee</span>
+            Celebrating <span className="text-accent">Golden Jubilee</span>
           </h1>
           <p className="text-muted-foreground text-lg">
             50 years of Mohammadpur Preparatory School & College (MPSC)
