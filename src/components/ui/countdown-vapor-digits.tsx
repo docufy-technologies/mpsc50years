@@ -26,11 +26,9 @@ function noise2(x: number, y: number) {
 
 // ---------------------------------------------------------------------------
 // unit scale — the row never gets configured, it is derived from the span that
-// is left: inside a day H:M:S, inside a month D:H:M:S, beyond that whole
-// calendar months followed by the same D:H:M:S tail. Every scale counts down to
-// the second. Months are whole calendar months from today with the day-of-month
-// clamped to each month's real length, so February never borrows from March:
-// 31 Jan + 1 month lands on 28 Feb (or 29 Feb in a leap year), not 3 Mar.
+// is left: inside a day H:M:S, inside 30 days D:H:M:S, beyond that whole
+// fixed 30-day months followed by the same D:H:M:S tail. Every scale counts
+// down to the second. Months are flat 30-day blocks, not calendar months.
 // ---------------------------------------------------------------------------
 
 export type CountdownScale = "time" | "days" | "months";
@@ -47,34 +45,9 @@ const SEC_MS = 1_000;
 const MIN_MS = 60 * SEC_MS;
 const HOUR_MS = 60 * MIN_MS;
 const DAY_MS = 24 * HOUR_MS;
-const MONTH_SCALE_AT = 30 * DAY_MS; // past this the calendar months take over
+const MONTH_SCALE_AT = 30 * DAY_MS; // past this the fixed 30-day months take over
+const MONTH_MS = 30 * DAY_MS; // flat month: no calendar lengths involved
 const MAX_UNITS = 5; // widest row (months) → 10 digit slots
-
-function daysInMonth(year: number, month: number) {
-  return new Date(year, month + 1, 0).getDate(); // day 0 of month+1
-}
-
-function addMonths(date: Date, count: number) {
-  const month = date.getMonth() + count;
-  const day = Math.min(date.getDate(), daysInMonth(date.getFullYear(), month));
-  return new Date(
-    date.getFullYear(),
-    month,
-    day,
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-    date.getMilliseconds(),
-  );
-}
-
-function wholeMonthsBetween(now: Date, target: Date) {
-  const span =
-    (target.getFullYear() - now.getFullYear()) * 12 +
-    (target.getMonth() - now.getMonth());
-  if (span <= 0) return 0;
-  return addMonths(now, span).getTime() > target.getTime() ? span - 1 : span;
-}
 
 function breakdown(targetMs: number, nowMs: number) {
   const rem = Math.max(0, targetMs - nowMs);
@@ -99,10 +72,10 @@ function breakdown(targetMs: number, nowMs: number) {
       ],
     };
   }
-  const now = new Date(nowMs);
-  const months = wholeMonthsBetween(now, new Date(targetMs));
-  const over = Math.max(0, targetMs - addMonths(now, months).getTime());
-  const o = Math.round(over / SEC_MS);
+  const totalSec = Math.round(rem / SEC_MS);
+  const monthSec = MONTH_MS / SEC_MS;
+  const months = Math.floor(totalSec / monthSec);
+  const o = totalSec % monthSec;
   return {
     scale: "months" as const,
     units: [
@@ -123,9 +96,9 @@ const toDigits = (units: number[]) =>
     )
     .join("");
 
-// months are absent from the base ISO 8601 duration grammar but they are what
-// we actually mean here, and folding them into days would lie to anything
-// reading the <time> attribute.
+// months here are flat 30-day blocks, so folding them into the ISO duration
+// as calendar months would lie to anything reading the <time> attribute —
+// but the label row says MONTHS, so the attribute keeps that same unit.
 function durationAttr(scale: CountdownScale, units: number[]) {
   const [a, b, c, d, e] = units;
   if (scale === "time") return `PT${a}H${b}M${c}S`;
@@ -225,7 +198,7 @@ export function VaporCountdown({
 
     // grain color tracks the real foreground token — read fresh on theme
     // change so light/dark both draw legible ink, never a hardcoded hex.
-    let grainColor = "#ededed";
+    let grainColor = "#ffffff";
     const updateGrainColor = () => {
       grainColor = getComputedStyle(digitEls[0]).color || grainColor;
     };
@@ -624,7 +597,7 @@ export function VaporCountdown({
       {row.map((label) => (
         <span
           key={label}
-          className="text-center font-mono text-[10px] tracking-[0.25em] text-ns-muted"
+          className="text-center font-mono text-xs text-muted-foreground tracking-widest"
         >
           {label}
         </span>
