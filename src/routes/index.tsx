@@ -34,6 +34,7 @@ const participationSteps = [
 export const Route = createFileRoute("/")({
   component: Home,
 });
+
 function WorkTogether({
   onClick,
   className,
@@ -104,7 +105,7 @@ function Home() {
             </div>
             <div className="flex flex-col items-center gap-4">
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
-                reserve your spot for the get-together by clicking the button
+                *reserve your spot for the get-together by clicking the button
               </small>
               <AnimatedButton className="uppercase">
                 register for the event
