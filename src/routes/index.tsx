@@ -1,10 +1,10 @@
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { cn } from "cn";
-import AnimatedButton from "#/components/ui/animated-button";
-import VaporCountdown from "#/components/ui/countdown-vapor-digits";
 import { ParticipationStepper } from "@/components/blocks/participation-stepper";
 import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
+import AnimatedButton from "@/components/ui/animated-button";
+import VaporCountdown from "@/components/ui/countdown-vapor-digits";
 
 const images = [
   { src: "https://picsum.photos/seed/hero1/1200/675", alt: "Hero image 1" },
@@ -105,7 +105,7 @@ function Home() {
             </div>
             <div className="flex flex-col items-center gap-4">
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
-                *reserve your spot for the get-together by clicking the button
+                Reserve your spot for the get-together by clicking the button
               </small>
               <AnimatedButton className="uppercase">
                 register for the event
