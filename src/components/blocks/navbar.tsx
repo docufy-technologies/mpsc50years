@@ -1,6 +1,6 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
 import { cn } from "cn";
-import { useRef, useState, type ReactNode } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
 type Position = {
   left: number;
@@ -23,7 +23,7 @@ export const navLinks = [
   },
   {
     label: "FAQs",
-    to: "/",
+    to: "/faq",
   },
 ] satisfies readonly {
   label: string;
