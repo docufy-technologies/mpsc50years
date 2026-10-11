@@ -1,5 +1,5 @@
 import { IconArrowUpRight } from "@tabler/icons-react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
 import { ParticipationStepper } from "@/components/blocks/participation-stepper";
 import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-function WorkTogether({
+function CelebrateTogether({
   onClick,
   className,
 }: {
@@ -87,6 +87,7 @@ function WorkTogether({
   );
 }
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
       <section id="hero" className="h-screen flex items-center justify-center">
@@ -114,7 +115,10 @@ function Home() {
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
                 Reserve your spot for the get-together by clicking the button
               </small>
-              <AnimatedButton className="uppercase">
+              <AnimatedButton
+                onClick={() => navigate({ to: "/register" })}
+                className="uppercase"
+              >
                 register for the event
               </AnimatedButton>
             </div>
@@ -143,7 +147,7 @@ function Home() {
           Registration closes in
         </p>
         <VaporCountdown targetDate={new Date("2026-11-10T23:59:59")} />
-        <WorkTogether />
+        <CelebrateTogether onClick={() => navigate({ to: "/register" })} />
       </section>
     </>
   );
