@@ -15,11 +15,11 @@ export const navLinks = [
   },
   {
     label: "About",
-    to: "/about",
+    to: "/",
   },
   {
     label: "Committee",
-    to: "/committee",
+    to: "/",
   },
   {
     label: "FAQs",
