@@ -1,4 +1,5 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { Toaster } from "sonner";
 
 import "../styles.css";
 import Footer from "@/components/blocks/footer";
@@ -14,6 +15,7 @@ function RootComponent() {
       <Navbar />
       <Outlet />
       <Footer />
+      <Toaster richColors position="top-right" />
     </>
   );
 }

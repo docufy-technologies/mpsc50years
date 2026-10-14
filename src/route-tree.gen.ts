@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,22 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/committee' | '/faq' | '/register'
+  fullPaths: '/' | '/about' | '/committee' | '/faq' | '/profile' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/committee' | '/faq' | '/register'
-  id: '__root__' | '/' | '/about' | '/committee' | '/faq' | '/register'
+  to: '/' | '/about' | '/committee' | '/faq' | '/profile' | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/committee'
+    | '/faq'
+    | '/profile'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +92,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -109,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -124,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
