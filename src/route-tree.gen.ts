@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as RegisterRouteImport } from './routes/register'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommitteeRoute = CommitteeRouteImport.update({
+  id: '/committee',
+  path: '/committee',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -38,12 +44,14 @@ const RegisterRoute = RegisterRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/faq' | '/register'
+  fullPaths: '/' | '/about' | '/committee' | '/faq' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/faq' | '/register'
-  id: '__root__' | '/' | '/about' | '/faq' | '/register'
+  to: '/' | '/about' | '/committee' | '/faq' | '/register'
+  id: '__root__' | '/' | '/about' | '/committee' | '/faq' | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/committee': {
+      id: '/committee'
+      path: '/committee'
+      fullPath: '/committee'
+      preLoaderRoute: typeof CommitteeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
   RegisterRoute: RegisterRoute,
 }
