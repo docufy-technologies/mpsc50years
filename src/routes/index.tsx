@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { CelebrateTogether } from "@/components/blocks/celebrate-together";
 import { Stepper } from "@/components/blocks/participation-stepper";
 import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
@@ -40,10 +40,10 @@ function Home() {
       <section id="hero" className="h-screen flex items-center justify-center">
         <TiltedGridHero
           images={images}
-          className="h-[75dvh] w-full bg-background"
+          className="h-[80dvh] w-full bg-background"
         >
           <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto py-4">
-            <div className="w-full flex flex-col items-center gap-2 md:pt-12">
+            <div className="w-full flex flex-col items-center gap-2">
               <div className="flex items-center justify-center gap-2">
                 <img src="/logo.png" alt="MPSC Logo" className="h-20" />
               </div>
@@ -54,13 +54,16 @@ function Home() {
                 50 years of Mohammadpur Preparatory School & College (MPSC)
               </p>
             </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center justify-center gap-2 pb-2">
                 <img src="/mpsc.png" alt="MPSC Logo" className="h-14" />
                 <small>Organizer</small>
               </div>
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
-                Reserve your spot for the get-together by clicking the button
+                Reserve your spot by clicking the button. Have questions?{" "}
+                <Link to="/faq" className="border-b border-primary">
+                  Check FAQ
+                </Link>
               </small>
               <AnimatedButton className="uppercase">
                 register for the event
