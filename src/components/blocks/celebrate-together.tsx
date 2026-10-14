@@ -11,7 +11,7 @@ export function CelebrateTogether({
   return (
     <section
       className={cn(
-        "flex relative min-h-105 gap-12 flex-col items-center justify-center overflow-hidden  px-5 py-16 text-center sm:min-h-120",
+        "flex relative gap-12 flex-col items-center justify-center overflow-hidden  px-5 py-16 text-center",
         className,
       )}
     >
