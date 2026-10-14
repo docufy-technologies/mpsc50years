@@ -9,7 +9,7 @@ export const navLinks = [
   },
   {
     label: "About",
-    to: "/about",
+    to: "/about-mpsc",
   },
   {
     label: "Committee",

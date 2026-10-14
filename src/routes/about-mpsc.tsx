@@ -3,7 +3,7 @@ import Gallery from "@/components/ui/gallery";
 import { TeamShowcase, type TeamMember } from "@/components/ui/team-showcase";
 import { Timeline } from "@/components/ui/timeline";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/about-mpsc")({
   component: RouteComponent,
 });
 
