@@ -13,7 +13,7 @@ export const navLinks = [
   },
   {
     label: "Committee",
-    to: "/",
+    to: "/committee",
   },
   {
     label: "Join",
