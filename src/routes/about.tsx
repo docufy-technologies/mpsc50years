@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import InfiniteGallery from "@/components/ui/infinite-gallery";
+import Gallery from "@/components/ui/gallery";
 import { TeamShowcase, type TeamMember } from "@/components/ui/team-showcase";
 import { Timeline } from "@/components/ui/timeline";
 
@@ -38,16 +38,29 @@ const evolution = [
   },
 ];
 
-const principal: TeamMember = {
-  name: "Dr. Md. Anwarul Islam",
-  designation: "Principal",
-};
-
 const chairmen: TeamMember[] = [
   { name: "Quazi Azher Ali", designation: "Former Chairman" },
   { name: "M A Malek", designation: "Former Chairman" },
   { name: "Ata Uddin Khan", designation: "Former Chairman" },
   { name: "Prof. Dr. M Tamim", designation: "Chairman, Board of Trustees" },
+];
+
+const principal: TeamMember = {
+  name: "Dr. Md. Anwarul Islam",
+  designation: "Principal",
+};
+
+// total 9 vice principals, names are coming, creating blocks first
+const vicePrincipals: TeamMember[] = [
+  { name: "Name 1", designation: "Vice Principal" },
+  { name: "Name 2", designation: "Vice Principal" },
+  { name: "Name 3", designation: "Vice Principal" },
+  { name: "Name 4", designation: "Vice Principal" },
+  { name: "Name 5", designation: "Vice Principal" },
+  { name: "Name 6", designation: "Vice Principal" },
+  { name: "Name 7", designation: "Vice Principal" },
+  { name: "Name 8", designation: "Vice Principal" },
+  { name: "Name 9", designation: "Vice Principal" },
 ];
 
 const aboutImages = [
@@ -67,13 +80,13 @@ const aboutImages = [
 function RouteComponent() {
   return (
     <>
-      <section className="relative h-[91dvh] w-full overflow-hidden">
-        <InfiniteGallery
+      <section className="relative h-screen w-full overflow-hidden">
+        <Gallery
           images={aboutImages}
-          speed={0.5}
+          speed={1.25}
           zSpacing={3}
           visibleCount={12}
-          falloff={{ near: 3, far: 14 }}
+          falloff={{ near: 3, far: 10 }}
           className="h-screen w-full overflow-hidden"
         />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-center text-white mix-blend-exclusion">
@@ -82,7 +95,7 @@ function RouteComponent() {
           </h1>
         </div>
       </section>
-      <section className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
         <div className="flex flex-col gap-2">
           <h1>Evolution</h1>
           <p className="text-sm leading-6 text-muted-foreground">
@@ -91,23 +104,32 @@ function RouteComponent() {
         </div>
         <Timeline items={evolution} />
       </section>
-      <section className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-20">
-        <div className="flex flex-col gap-2">
-          <h1>Principal</h1>
-          <p className="text-sm leading-6 text-muted-foreground">
-            Leading MPSC into its next 50 years.
-          </p>
-        </div>
-        <TeamShowcase members={[principal]} className="lg:grid-cols-4" />
-      </section>
-      <section className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
         <div className="flex flex-col gap-2">
           <h1>Chairmen</h1>
           <p className="text-sm leading-6 text-muted-foreground">
             Past and present chairmen of the Board of Trustees.
           </p>
         </div>
-        <TeamShowcase members={chairmen} className="lg:grid-cols-4" />
+        <TeamShowcase members={chairmen} />
+      </section>
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+        <div className="flex flex-col gap-2">
+          <h1>Principal</h1>
+          <p className="text-sm leading-6 text-muted-foreground">
+            Leading MPSC into its next 50 years.
+          </p>
+        </div>
+        <TeamShowcase members={[principal]} />
+      </section>
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+        <div className="flex flex-col gap-2">
+          <h1>Vice Principals</h1>
+          <p className="text-sm leading-6 text-muted-foreground">
+            Supporting the Principal in leading MPSC.
+          </p>
+        </div>
+        <TeamShowcase members={vicePrincipals} />
       </section>
     </>
   );

@@ -23,7 +23,7 @@ export interface BlurSettings {
   maxBlur: number;
 }
 
-export interface InfiniteGalleryProps {
+export interface GalleryProps {
   images: ImageItem[];
   speed?: number;
   zSpacing?: number;
@@ -141,12 +141,14 @@ function opacityForPosition(normalized: number, fade: FadeSettings): number {
   let opacity = 1;
   if (normalized >= fade.fadeIn.start && normalized <= fade.fadeIn.end) {
     const p =
-      (normalized - fade.fadeIn.start) /
-      (fade.fadeIn.end - fade.fadeIn.start);
+      (normalized - fade.fadeIn.start) / (fade.fadeIn.end - fade.fadeIn.start);
     opacity = p;
   } else if (normalized < fade.fadeIn.start) {
     opacity = 0;
-  } else if (normalized >= fade.fadeOut.start && normalized <= fade.fadeOut.end) {
+  } else if (
+    normalized >= fade.fadeOut.start &&
+    normalized <= fade.fadeOut.end
+  ) {
     const p =
       (normalized - fade.fadeOut.start) /
       (fade.fadeOut.end - fade.fadeOut.start);
@@ -165,7 +167,10 @@ function blurForPosition(normalized: number, blur: BlurSettings): number {
     value = blur.maxBlur * (1 - p);
   } else if (normalized < blur.blurIn.start) {
     value = blur.maxBlur;
-  } else if (normalized >= blur.blurOut.start && normalized <= blur.blurOut.end) {
+  } else if (
+    normalized >= blur.blurOut.start &&
+    normalized <= blur.blurOut.end
+  ) {
     const p =
       (normalized - blur.blurOut.start) /
       (blur.blurOut.end - blur.blurOut.start);
@@ -261,14 +266,7 @@ function GalleryScene({
   progressive = true,
   staggerMs = 140,
   introDuration = 0.9,
-  registerHandlers,
-}: Omit<InfiniteGalleryProps, "className" | "style" | "falloff"> & {
-  registerHandlers: (handlers: {
-    onWheelDelta: (deltaY: number) => void;
-    onKeyStep: (dir: 1 | -1) => void;
-    onTouchDelta: (deltaY: number) => void;
-  }) => void;
-}) {
+}: Omit<GalleryProps, "className" | "style" | "falloff">) {
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
@@ -276,7 +274,10 @@ function GalleryScene({
       ),
     [images],
   );
-  const srcs = useMemo(() => normalizedImages.map((img) => img.src), [normalizedImages]);
+  const srcs = useMemo(
+    () => normalizedImages.map((img) => img.src),
+    [normalizedImages],
+  );
   const textures = useProgressiveTextures(srcs, progressive, staggerMs);
 
   const materials = useMemo(
@@ -350,8 +351,12 @@ function GalleryScene({
   const meshRefs = useRef<(THREE.Mesh | null)[]>([]);
   // When each plane slot first got a texture, for the staggered fade/scale-in.
   // -1 means not yet revealed.
-  const revealAtRef = useRef<number[]>(Array.from({ length: visibleCount }, () => -1));
-  const lastImageIndexRef = useRef<number[]>(Array.from({ length: visibleCount }, () => -1));
+  const revealAtRef = useRef<number[]>(
+    Array.from({ length: visibleCount }, () => -1),
+  );
+  const lastImageIndexRef = useRef<number[]>(
+    Array.from({ length: visibleCount }, () => -1),
+  );
   useEffect(() => {
     revealAtRef.current = Array.from({ length: visibleCount }, (_, i) =>
       lastImageIndexRef.current[i] === (planesData.current[i]?.imageIndex ?? -1)
@@ -361,58 +366,12 @@ function GalleryScene({
     lastImageIndexRef.current = planesData.current.map((p) => p.imageIndex);
   }, [visibleCount, totalImages, depthRange]);
   const velocityRef = useRef(0);
-  const autoPlayRef = useRef(true);
-  const lastInteraction = useRef(Date.now());
   const speedRef = useRef(speed);
   speedRef.current = speed;
 
-  const poke = useCallback(() => {
-    autoPlayRef.current = false;
-    lastInteraction.current = Date.now();
-  }, []);
-
-  const onWheelDelta = useCallback(
-    (deltaY: number) => {
-      velocityRef.current += deltaY * 0.01 * speedRef.current;
-      poke();
-    },
-    [poke],
-  );
-
-  const onKeyStep = useCallback(
-    (dir: 1 | -1) => {
-      velocityRef.current += dir * 2 * speedRef.current;
-      poke();
-    },
-    [poke],
-  );
-
-  const onTouchDelta = useCallback(
-    (deltaY: number) => {
-      velocityRef.current += deltaY * 0.02 * speedRef.current;
-      poke();
-    },
-    [poke],
-  );
-
-  useEffect(() => {
-    registerHandlers({ onWheelDelta, onKeyStep, onTouchDelta });
-  }, [registerHandlers, onWheelDelta, onKeyStep, onTouchDelta]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Date.now() - lastInteraction.current > 3000) {
-        autoPlayRef.current = true;
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
-    if (autoPlayRef.current) {
-      velocityRef.current += 0.3 * dt;
-    }
+    velocityRef.current += 0.3 * speedRef.current * dt;
     velocityRef.current *= 0.95;
 
     const time = state.clock.getElapsedTime();
@@ -475,7 +434,9 @@ function GalleryScene({
           if (revealAtRef.current[i] == null || revealAtRef.current[i]! < 0) {
             revealAtRef.current[i] = time;
           }
-          const t = (time - (revealAtRef.current[i] ?? time)) / Math.max(introDuration, 0.01);
+          const t =
+            (time - (revealAtRef.current[i] ?? time)) /
+            Math.max(introDuration, 0.01);
           const clamped = Math.max(0, Math.min(1, t));
           intro = 1 - Math.pow(1 - clamped, 3);
         }
@@ -516,7 +477,9 @@ function GalleryScene({
         material.uniforms.scrollForce.value = velocityRef.current;
         const normalized = plane.z / depthRange;
         const baseOpacity = opacityForPosition(normalized, fadeSettings);
-        material.uniforms.opacity.value = progressive ? baseOpacity * intro : baseOpacity;
+        material.uniforms.opacity.value = progressive
+          ? baseOpacity * intro
+          : baseOpacity;
         material.uniforms.blurAmount.value = blurForPosition(
           normalized,
           blurSettings,
@@ -604,7 +567,7 @@ function FallbackGallery({ images }: { images: ImageItem[] }) {
   );
 }
 
-export default function InfiniteGallery({
+export default function Gallery({
   images,
   speed = 1,
   zSpacing = 3,
@@ -623,25 +586,9 @@ export default function InfiniteGallery({
   progressive = true,
   staggerMs = 140,
   introDuration = 0.9,
-}: InfiniteGalleryProps) {
+}: GalleryProps) {
   const [webglSupported, setWebglSupported] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
-  const handlersRef = useRef<{
-    onWheelDelta: (deltaY: number) => void;
-    onKeyStep: (dir: 1 | -1) => void;
-    onTouchDelta: (deltaY: number) => void;
-  } | null>(null);
-
-  const registerHandlers = useCallback(
-    (handlers: {
-      onWheelDelta: (deltaY: number) => void;
-      onKeyStep: (dir: 1 | -1) => void;
-      onTouchDelta: (deltaY: number) => void;
-    }) => {
-      handlersRef.current = handlers;
-    },
-    [],
-  );
 
   useEffect(() => {
     try {
@@ -654,52 +601,6 @@ export default function InfiniteGallery({
     }
   }, []);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el || !webglSupported) return;
-
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      handlersRef.current?.onWheelDelta(e.deltaY);
-    };
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
-        handlersRef.current?.onKeyStep(-1);
-      } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
-        handlersRef.current?.onKeyStep(1);
-      }
-    };
-
-    let lastTouchY: number | null = null;
-    const onTouchStart = (e: TouchEvent) => {
-      lastTouchY = e.touches[0]?.clientY ?? null;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      const y = e.touches[0]?.clientY;
-      if (lastTouchY !== null && y !== undefined) {
-        handlersRef.current?.onTouchDelta(lastTouchY - y);
-        lastTouchY = y;
-      }
-    };
-    const onTouchEnd = () => {
-      lastTouchY = null;
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    document.addEventListener("keydown", onKeyDown);
-    el.addEventListener("touchstart", onTouchStart, { passive: true });
-    el.addEventListener("touchmove", onTouchMove, { passive: true });
-    el.addEventListener("touchend", onTouchEnd);
-
-    return () => {
-      el.removeEventListener("wheel", onWheel);
-      document.removeEventListener("keydown", onKeyDown);
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchmove", onTouchMove);
-      el.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [webglSupported]);
-
   if (!webglSupported) {
     return (
       <div className={className} style={style}>
@@ -710,7 +611,10 @@ export default function InfiniteGallery({
 
   return (
     <div ref={containerRef} className={className} style={style}>
-      <Canvas camera={{ position: [0, 0, 0], fov: 55 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas
+        camera={{ position: [0, 0, 0], fov: 55 }}
+        gl={{ antialias: true, alpha: true }}
+      >
         <Suspense fallback={null}>
           <GalleryScene
             images={images}
@@ -722,7 +626,6 @@ export default function InfiniteGallery({
             progressive={progressive}
             staggerMs={staggerMs}
             introDuration={introDuration}
-            registerHandlers={registerHandlers}
           />
         </Suspense>
       </Canvas>
