@@ -98,13 +98,6 @@ export default function Navbar() {
           {l.label}
         </NavTab>
       ))}
-      <NavTab
-        to="/register"
-        setPosition={setPosition}
-        className="bg-foreground text-background"
-      >
-        Register
-      </NavTab>
       <Cursor position={position} />
     </nav>
   );
