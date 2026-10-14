@@ -88,13 +88,15 @@ export function AnimatedButton(props: AnimatedButtonProps) {
       <span
         ref={textRef}
         className="tracking-wide flex items-center justify-center h-full w-full relative z-10"
-        style={{
-          "--mask-x": "100%",
-          maskImage:
-            "linear-gradient(-75deg, white calc(var(--mask-x) + 20%), transparent calc(var(--mask-x) + 30%), white calc(var(--mask-x) + 100%))",
-          WebkitMaskImage:
-            "linear-gradient(-75deg, white calc(var(--mask-x) + 20%), transparent calc(var(--mask-x) + 30%), white calc(var(--mask-x) + 100%))",
-        } as React.CSSProperties}
+        style={
+          {
+            "--mask-x": "100%",
+            maskImage:
+              "linear-gradient(-75deg, white calc(var(--mask-x) + 20%), transparent calc(var(--mask-x) + 30%), white calc(var(--mask-x) + 100%))",
+            WebkitMaskImage:
+              "linear-gradient(-75deg, white calc(var(--mask-x) + 20%), transparent calc(var(--mask-x) + 30%), white calc(var(--mask-x) + 100%))",
+          } as React.CSSProperties
+        }
       >
         {props.children ?? "Browse Components"}
       </span>

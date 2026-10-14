@@ -1,18 +1,17 @@
-import { IconArrowUpRight } from "@tabler/icons-react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { cn } from "cn";
-import { ParticipationStepper } from "@/components/blocks/participation-stepper";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { CelebrateTogether } from "@/components/blocks/celebrate-together";
+import { Stepper } from "@/components/blocks/participation-stepper";
 import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
 import AnimatedButton from "@/components/ui/animated-button";
 import VaporCountdown from "@/components/ui/countdown-vapor-digits";
 
 const images = [
-  { src: "https://picsum.photos/seed/hero1/1200/675", alt: "Hero image 1" },
-  { src: "https://picsum.photos/seed/hero2/1200/675", alt: "Hero image 2" },
-  { src: "https://picsum.photos/seed/hero3/1200/675", alt: "Hero image 3" },
-  { src: "https://picsum.photos/seed/hero4/1200/675", alt: "Hero image 4" },
-  { src: "https://picsum.photos/seed/hero5/1200/675", alt: "Hero image 5" },
-  { src: "https://picsum.photos/seed/hero6/1200/675", alt: "Hero image 6" },
+  { src: "/home/IMG-20260927-WA0230.jpg", alt: "Hero image 1" },
+  { src: "/home/IMG-20261005-WA0105.jpg", alt: "Hero image 2" },
+  { src: "/home/IMG-20261006-WA0034.jpg", alt: "Hero image 3" },
+  { src: "/home/IMG-20261006-WA0066.jpg", alt: "Hero image 4" },
+  { src: "/home/IMG-20261011-WA0023.jpg", alt: "Hero image 5" },
+  { src: "/home/IMG-20261011-WA0250.jpg", alt: "Hero image 6" },
 ];
 
 const participationSteps = [
@@ -35,57 +34,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-function CelebrateTogether({
-  onClick,
-  className,
-}: {
-  onClick?: () => void;
-  className?: string;
-}) {
-  return (
-    <section
-      className={cn(
-        "flex relative min-h-105 gap-12 flex-col items-center justify-center overflow-hidden  px-5 py-16 text-center sm:min-h-120",
-        className,
-      )}
-    >
-      <div className="group relative" style={{ pointerEvents: "auto" }}>
-        <div className="flex flex-col items-center gap-6">
-          <h2
-            className="relative text-center text-[clamp(3rem,8vw,4.5rem)] font-normal leading-[0.98] tracking-[-0.055em] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{
-              opacity: 1,
-              transform: "translateY(0) scale(1)",
-            }}
-          >
-            <span className="block overflow-hidden">
-              <span className="block text-foreground transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[-8%]">
-                Let's <span className="text-accent">celebrate</span>
-              </span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="block text-muted-foreground/60 transition-transform delay-75 duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-[-8%]">
-                together
-              </span>
-            </span>
-          </h2>
-          <button
-            type="button"
-            onClick={onClick}
-            aria-label="Let's celebrate together"
-            className="relative mt-4 flex size-16 cursor-pointer items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 sm:size-20"
-          >
-            <div className="pointer-events-none absolute inset-0 rounded-full border border-border transition-all duration-500 ease-out group-hover:scale-110 group-hover:border-foreground group-hover:bg-foreground" />
-            <IconArrowUpRight
-              className="size-6 text-foreground transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-background sm:size-7"
-              stroke={1.8}
-            />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
 function Home() {
   const navigate = useNavigate();
   return (
@@ -93,10 +41,10 @@ function Home() {
       <section id="hero" className="h-screen flex items-center justify-center">
         <TiltedGridHero
           images={images}
-          className="h-[75dvh] w-full bg-background"
+          className="h-[80dvh] w-full bg-background"
         >
           <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto py-4">
-            <div className="w-full flex flex-col items-center gap-2 md:pt-12">
+            <div className="w-full flex flex-col items-center gap-2">
               <div className="flex items-center justify-center gap-2">
                 <img src="/logo.png" alt="MPSC Logo" className="h-20" />
               </div>
@@ -107,13 +55,16 @@ function Home() {
                 50 years of Mohammadpur Preparatory School & College (MPSC)
               </p>
             </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center justify-center gap-2 pb-2">
                 <img src="/mpsc.png" alt="MPSC Logo" className="h-14" />
                 <small>Organizer</small>
               </div>
               <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
-                Reserve your spot for the get-together by clicking the button
+                Reserve your spot by clicking the button. Have questions?{" "}
+                <Link to="/faq" className="border-b border-primary">
+                  Check FAQ
+                </Link>
               </small>
               <AnimatedButton
                 onClick={() => navigate({ to: "/register" })}
@@ -134,10 +85,7 @@ function Home() {
             Three Steps to <span className="text-accent">Get-together</span>
           </h1>
         </div>
-        <ParticipationStepper
-          steps={participationSteps}
-          className="mx-auto max-w-5xl"
-        />
+        <Stepper steps={participationSteps} className="mx-auto max-w-5xl" />
       </section>
       <section
         id="reg-call-countdown"

@@ -1,5 +1,5 @@
-import type { HTMLAttributes, DetailsHTMLAttributes } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
+import type { DetailsHTMLAttributes, HTMLAttributes } from "react";
 
 type AccordionItemProps = DetailsHTMLAttributes<HTMLDetailsElement>;
 

@@ -1,12 +1,6 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
 import { cn } from "cn";
-import { type ReactNode, useRef, useState } from "react";
-
-type Position = {
-  left: number;
-  width: number;
-  opacity: number;
-};
+import { type ReactNode, useRef } from "react";
 
 export const navLinks = [
   {
@@ -15,15 +9,15 @@ export const navLinks = [
   },
   {
     label: "About",
-    to: "/",
+    to: "/about-mpsc",
   },
   {
     label: "Committee",
-    to: "/",
+    to: "/committee",
   },
   {
-    label: "FAQs",
-    to: "/faq",
+    label: "Join",
+    to: "/register",
   },
 ] satisfies readonly {
   label: string;
@@ -32,31 +26,17 @@ export const navLinks = [
 
 type NavTabProps = {
   children: ReactNode;
-  setPosition: (position: Position) => void;
   className?: string;
   to: LinkProps["to"];
 };
 
-function NavTab({ children, setPosition, className, to }: NavTabProps) {
+function NavTab({ children, className, to }: NavTabProps) {
   const ref = useRef<HTMLLIElement>(null);
-
-  const handleMouseEnter = () => {
-    if (!ref.current) return;
-
-    const { width } = ref.current.getBoundingClientRect();
-
-    setPosition({
-      width,
-      opacity: 1,
-      left: ref.current.offsetLeft,
-    });
-  };
 
   return (
     <Link to={to}>
       <li
         ref={ref}
-        onMouseEnter={handleMouseEnter}
         className={cn(
           "relative z-10 block cursor-pointer px-3 py-1 text-base! md:text-base rounded-full hover:bg-secondary",
           className,
@@ -68,44 +48,12 @@ function NavTab({ children, setPosition, className, to }: NavTabProps) {
   );
 }
 
-function Cursor(props: { position: Position }) {
-  return (
-    <div
-      className="absolute z-0 h-8 -translate-y-0.5 max-sm:-translate-y-2 rounded-full bg-secondary transition-all duration-300 ease-out"
-      style={{
-        left: `${props.position.left}px`,
-        width: `${props.position.width}px`,
-        opacity: props.position.opacity,
-      }}
-    />
-  );
-}
-
 export default function Navbar() {
-  const [position, setPosition] = useState<Position>({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
-
   return (
-    <nav
-      onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
-      className="mx-auto flex w-fit rounded-full border border-muted bg-transparent backdrop-blur-xl z-100 fixed top-4 left-1/2 -translate-x-1/2 px-1 py-1 max-sm:p-1 gap-4 max-sm:gap-0"
-    >
+    <nav className="mx-auto flex w-fit rounded-full border border-muted bg-transparent backdrop-blur-xl z-100 fixed top-4 left-1/2 -translate-x-1/2 px-1 py-1 max-sm:p-1 gap-4 max-sm:gap-0">
       {navLinks.map((l) => (
-        <NavTab to={l.to} setPosition={setPosition}>
-          {l.label}
-        </NavTab>
+        <NavTab to={l.to}>{l.label}</NavTab>
       ))}
-      <NavTab
-        to="/register"
-        setPosition={setPosition}
-        className="bg-foreground text-background"
-      >
-        Register
-      </NavTab>
-      <Cursor position={position} />
     </nav>
   );
 }

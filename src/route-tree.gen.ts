@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutMpscRouteImport } from './routes/about-mpsc'
+import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,9 +21,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutMpscRoute = AboutMpscRouteImport.update({
+  id: '/about-mpsc',
+  path: '/about-mpsc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommitteeRoute = CommitteeRouteImport.update({
+  id: '/committee',
+  path: '/committee',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -31,31 +49,51 @@ const RegisterRoute = RegisterRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about-mpsc': typeof AboutMpscRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about-mpsc': typeof AboutMpscRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about-mpsc': typeof AboutMpscRoute
+  '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/faq' | '/register'
+  fullPaths:
+    '/' | '/about-mpsc' | '/committee' | '/faq' | '/profile' | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/register'
-  id: '__root__' | '/' | '/faq' | '/register'
+  to: '/' | '/about-mpsc' | '/committee' | '/faq' | '/profile' | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/about-mpsc'
+    | '/committee'
+    | '/faq'
+    | '/profile'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutMpscRoute: typeof AboutMpscRoute
+  CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
+  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -68,11 +106,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about-mpsc': {
+      id: '/about-mpsc'
+      path: '/about-mpsc'
+      fullPath: '/about-mpsc'
+      preLoaderRoute: typeof AboutMpscRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/committee': {
+      id: '/committee'
+      path: '/committee'
+      fullPath: '/committee'
+      preLoaderRoute: typeof CommitteeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -87,7 +146,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutMpscRoute: AboutMpscRoute,
+  CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
+  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
