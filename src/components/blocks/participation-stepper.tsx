@@ -1,19 +1,16 @@
 import { cn } from "@/lib/utils";
 
-export type ParticipationStep = {
+export type Step = {
   title: string;
   description: string;
 };
 
-type ParticipationStepperProps = {
-  steps: ParticipationStep[];
+type StepperProps = {
+  steps: Step[];
   className?: string;
 };
 
-export function ParticipationStepper({
-  steps,
-  className,
-}: ParticipationStepperProps) {
+export function Stepper({ steps, className }: StepperProps) {
   return (
     <ol
       className={cn(
@@ -53,4 +50,4 @@ export function ParticipationStepper({
   );
 }
 
-export default ParticipationStepper;
+export default Stepper;

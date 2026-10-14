@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CelebrateTogether } from "@/components/blocks/celebrate-together";
-import { ParticipationStepper } from "@/components/blocks/participation-stepper";
+import { Stepper } from "@/components/blocks/participation-stepper";
 import { TiltedGridHero } from "@/components/blocks/tilted-grid-hero";
 import AnimatedButton from "@/components/ui/animated-button";
 import VaporCountdown from "@/components/ui/countdown-vapor-digits";
@@ -78,7 +78,7 @@ function Home() {
             Three Steps to <span className="text-accent">Get-together</span>
           </h1>
         </div>
-        <ParticipationStepper steps={participationSteps} className="mx-auto max-w-5xl" />
+        <Stepper steps={participationSteps} className="mx-auto max-w-5xl" />
       </section>
       <section
         id="reg-call-countdown"
