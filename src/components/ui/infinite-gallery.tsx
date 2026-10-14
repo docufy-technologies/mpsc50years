@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 export type ImageItem = string | { src: string; alt?: string };
@@ -35,6 +34,12 @@ export interface InfiniteGalleryProps {
   blurSettings?: BlurSettings;
   className?: string;
   style?: React.CSSProperties;
+  /** Load textures sequentially so planes reveal one by one. Default true. */
+  progressive?: boolean;
+  /** Pause between each image load so the stagger reads clearly. Default 140ms. */
+  staggerMs?: number;
+  /** Fade/scale-in duration per image. Default 0.9s. */
+  introDuration?: number;
 }
 
 interface PlaneData {
@@ -171,6 +176,74 @@ function blurForPosition(normalized: number, blur: BlurSettings): number {
   return Math.max(0, Math.min(blur.maxBlur, value));
 }
 
+/**
+ * Load image textures one by one (in order) instead of all at once.
+ * Returns an array parallel to `srcs` with `null` for not-yet-loaded slots.
+ * Each state update mounts one more plane, so the gallery fills in gradually.
+ */
+function useProgressiveTextures(
+  srcs: string[],
+  enabled: boolean,
+  staggerMs: number,
+) {
+  const [textures, setTextures] = useState<(THREE.Texture | null)[]>(() =>
+    srcs.map(() => null),
+  );
+  const key = srcs.join("|");
+
+  useEffect(() => {
+    const list = key.split("|").filter(Boolean);
+    setTextures(list.map(() => null));
+    if (!enabled || list.length === 0) return;
+    let cancelled = false;
+    const loader = new THREE.TextureLoader();
+    // Cache-bust only in dev; in prod browser cache makes stagger invisible
+    // without the deliberate pause below.
+    const loadNext = async () => {
+      for (let i = 0; i < list.length; i++) {
+        if (cancelled) break;
+        try {
+          const tex = await loader.loadAsync(list[i]);
+          if (cancelled) {
+            tex.dispose();
+            break;
+          }
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.needsUpdate = true;
+          if (!cancelled) {
+            setTextures((prev) => {
+              if (prev[i]) return prev;
+              const next = [...prev];
+              next[i] = tex;
+              return next;
+            });
+          }
+        } catch {
+          // Skip broken images, keep the sequence moving.
+        }
+        if (!cancelled && i < list.length - 1 && staggerMs > 0) {
+          await new Promise((r) => setTimeout(r, staggerMs));
+        }
+      }
+    };
+    loadNext();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, enabled, staggerMs]);
+
+  useEffect(() => {
+    const current = textures;
+    return () => {
+      current.forEach((t) => t?.dispose());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return textures;
+}
+
 function GalleryScene({
   images,
   speed = 1,
@@ -185,6 +258,9 @@ function GalleryScene({
     blurOut: { start: 0.9, end: 1.0 },
     maxBlur: 3.0,
   },
+  progressive = true,
+  staggerMs = 140,
+  introDuration = 0.9,
   registerHandlers,
 }: Omit<InfiniteGalleryProps, "className" | "style" | "falloff"> & {
   registerHandlers: (handlers: {
@@ -201,7 +277,7 @@ function GalleryScene({
     [images],
   );
   const srcs = useMemo(() => normalizedImages.map((img) => img.src), [normalizedImages]);
-  const textures = useTexture(srcs) as THREE.Texture[];
+  const textures = useProgressiveTextures(srcs, progressive, staggerMs);
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
@@ -258,15 +334,12 @@ function GalleryScene({
   }, [depthRange, spatialPositions, totalImages, visibleCount]);
 
   useEffect(() => {
-    textures.forEach((t) => {
-      if (t) {
-        t.colorSpace = THREE.SRGBColorSpace;
-        t.needsUpdate = true;
-      }
-    });
     materials.forEach((material, i) => {
       const planeImage = planesData.current[i]?.imageIndex ?? 0;
-      const texture = textures[planeImage % Math.max(textures.length, 1)];
+      const texture =
+        textures.length > 0
+          ? textures[planeImage % Math.max(textures.length, 1)]
+          : null;
       if (material.uniforms && texture) {
         material.uniforms.map.value = texture;
       }
@@ -275,6 +348,18 @@ function GalleryScene({
   }, [textures]);
 
   const meshRefs = useRef<(THREE.Mesh | null)[]>([]);
+  // When each plane slot first got a texture, for the staggered fade/scale-in.
+  // -1 means not yet revealed.
+  const revealAtRef = useRef<number[]>(Array.from({ length: visibleCount }, () => -1));
+  const lastImageIndexRef = useRef<number[]>(Array.from({ length: visibleCount }, () => -1));
+  useEffect(() => {
+    revealAtRef.current = Array.from({ length: visibleCount }, (_, i) =>
+      lastImageIndexRef.current[i] === (planesData.current[i]?.imageIndex ?? -1)
+        ? (revealAtRef.current[i] ?? -1)
+        : -1,
+    );
+    lastImageIndexRef.current = planesData.current.map((p) => p.imageIndex);
+  }, [visibleCount, totalImages, depthRange]);
   const velocityRef = useRef(0);
   const autoPlayRef = useRef(true);
   const lastInteraction = useRef(Date.now());
@@ -348,12 +433,26 @@ function GalleryScene({
       }
 
       if (wrapsForward > 0 && imageAdvance > 0 && totalImages > 0) {
-        plane.imageIndex =
+        const candidate =
           (plane.imageIndex + wrapsForward * imageAdvance) % totalImages;
+        // Don't swap to a texture that hasn't loaded yet, keeps the
+        // one-by-one reveal clean instead of flashing empty planes.
+        if (!progressive || textures[candidate]) {
+          if (plane.imageIndex !== candidate) {
+            plane.imageIndex = candidate;
+            revealAtRef.current[i] = -1;
+          }
+        }
       }
       if (wrapsBackward > 0 && imageAdvance > 0 && totalImages > 0) {
         const step = plane.imageIndex - wrapsBackward * imageAdvance;
-        plane.imageIndex = ((step % totalImages) + totalImages) % totalImages;
+        const candidate = ((step % totalImages) + totalImages) % totalImages;
+        if (!progressive || textures[candidate]) {
+          if (plane.imageIndex !== candidate) {
+            plane.imageIndex = candidate;
+            revealAtRef.current[i] = -1;
+          }
+        }
       }
 
       plane.z = ((newZ % depthRange) + depthRange) % depthRange;
@@ -362,23 +461,62 @@ function GalleryScene({
 
       const worldZ = plane.z - depthRange / 2;
       const mesh = meshRefs.current[i];
-      if (mesh) {
-        mesh.position.set(plane.x, plane.y, worldZ);
+
+      const texture = textures[plane.imageIndex] ?? null;
+      const material = materials[i];
+
+      // Staggered entrance: first frame with a texture stamps the start time,
+      // then ease opacity + scale from 0 so each image grows in one by one.
+      let intro = 1;
+      if (progressive) {
+        if (!texture) {
+          intro = 0;
+        } else {
+          if (revealAtRef.current[i] == null || revealAtRef.current[i]! < 0) {
+            revealAtRef.current[i] = time;
+          }
+          const t = (time - (revealAtRef.current[i] ?? time)) / Math.max(introDuration, 0.01);
+          const clamped = Math.max(0, Math.min(1, t));
+          intro = 1 - Math.pow(1 - clamped, 3);
+        }
       }
 
-      const material = materials[i];
+      if (mesh) {
+        mesh.position.set(plane.x, plane.y, worldZ);
+        if (progressive) {
+          const s = Math.max(intro, 0.0001);
+          // Base scale is set from aspect on mount; scale relatively here.
+          mesh.scale.setScalar(s);
+          // Restore true aspect scale once fully revealed (handled below).
+          const tex = texture;
+          if (tex?.image && intro >= 1) {
+            const img = tex.image as HTMLImageElement;
+            if (img.width && img.height) {
+              const aspect = img.width / img.height;
+              if (aspect > 1) mesh.scale.set(2 * aspect, 2, 1);
+              else mesh.scale.set(2, 2 / aspect, 1);
+            }
+          } else if (tex?.image) {
+            const img = tex.image as HTMLImageElement;
+            if (img.width && img.height) {
+              const aspect = img.width / img.height;
+              const bx = aspect > 1 ? 2 * aspect : 2;
+              const by = aspect > 1 ? 2 : 2 / aspect;
+              mesh.scale.set(bx * s, by * s, 1);
+            }
+          }
+        }
+      }
+
       if (material?.uniforms) {
-        const texture = textures[plane.imageIndex];
         if (texture && material.uniforms.map.value !== texture) {
           material.uniforms.map.value = texture;
         }
         material.uniforms.time.value = time;
         material.uniforms.scrollForce.value = velocityRef.current;
         const normalized = plane.z / depthRange;
-        material.uniforms.opacity.value = opacityForPosition(
-          normalized,
-          fadeSettings,
-        );
+        const baseOpacity = opacityForPosition(normalized, fadeSettings);
+        material.uniforms.opacity.value = progressive ? baseOpacity * intro : baseOpacity;
         material.uniforms.blurAmount.value = blurForPosition(
           normalized,
           blurSettings,
@@ -392,18 +530,27 @@ function GalleryScene({
   return (
     <group>
       {planesData.current.map((plane, i) => {
-        const texture = textures[plane.imageIndex];
+        const texture = textures[plane.imageIndex] ?? null;
         const material = materials[i];
-        if (!texture || !material) return null;
+        if (progressive && !texture) return null;
+        if (!material) return null;
+        // Non-progressive path (or texture just swapped): fall back gracefully.
+        const tex = texture ?? textures.find(Boolean) ?? null;
+        if (!tex) return null;
         const aspect =
-          texture.image &&
-          (texture.image as HTMLImageElement).width &&
-          (texture.image as HTMLImageElement).height
-            ? (texture.image as HTMLImageElement).width /
-              (texture.image as HTMLImageElement).height
+          tex.image &&
+          (tex.image as HTMLImageElement).width &&
+          (tex.image as HTMLImageElement).height
+            ? (tex.image as HTMLImageElement).width /
+              (tex.image as HTMLImageElement).height
             : 1;
-        const scale: [number, number, number] =
+        const fullScale: [number, number, number] =
           aspect > 1 ? [2 * aspect, 2, 1] : [2, 2 / aspect, 1];
+        // Start tiny when progressive so the useFrame intro can grow it
+        // instead of flashing full-size for a frame.
+        const initialScale: [number, number, number] = progressive
+          ? [0.0001, 0.0001, 1]
+          : fullScale;
         const worldZ = plane.z - depthRange / 2;
         return (
           <mesh
@@ -412,7 +559,7 @@ function GalleryScene({
               meshRefs.current[i] = m;
             }}
             position={[plane.x, plane.y, worldZ]}
-            scale={scale}
+            scale={initialScale}
             material={material}
             onPointerEnter={() => {
               if (material.uniforms) material.uniforms.isHovered.value = 1.0;
@@ -473,6 +620,9 @@ export default function InfiniteGallery({
   },
   className = "h-96 w-full",
   style,
+  progressive = true,
+  staggerMs = 140,
+  introDuration = 0.9,
 }: InfiniteGalleryProps) {
   const [webglSupported, setWebglSupported] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -569,6 +719,9 @@ export default function InfiniteGallery({
             visibleCount={visibleCount}
             fadeSettings={fadeSettings}
             blurSettings={blurSettings}
+            progressive={progressive}
+            staggerMs={staggerMs}
+            introDuration={introDuration}
             registerHandlers={registerHandlers}
           />
         </Suspense>
