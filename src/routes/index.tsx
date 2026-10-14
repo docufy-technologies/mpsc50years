@@ -6,12 +6,12 @@ import AnimatedButton from "@/components/ui/animated-button";
 import VaporCountdown from "@/components/ui/countdown-vapor-digits";
 
 const images = [
-  { src: "https://picsum.photos/seed/hero1/1200/675", alt: "Hero image 1" },
-  { src: "https://picsum.photos/seed/hero2/1200/675", alt: "Hero image 2" },
-  { src: "https://picsum.photos/seed/hero3/1200/675", alt: "Hero image 3" },
-  { src: "https://picsum.photos/seed/hero4/1200/675", alt: "Hero image 4" },
-  { src: "https://picsum.photos/seed/hero5/1200/675", alt: "Hero image 5" },
-  { src: "https://picsum.photos/seed/hero6/1200/675", alt: "Hero image 6" },
+  { src: "/home/IMG-20260927-WA0230.jpg", alt: "Hero image 1" },
+  { src: "/home/IMG-20261005-WA0105.jpg", alt: "Hero image 2" },
+  { src: "/home/IMG-20261006-WA0034.jpg", alt: "Hero image 3" },
+  { src: "/home/IMG-20261006-WA0066.jpg", alt: "Hero image 4" },
+  { src: "/home/IMG-20261011-WA0023.jpg", alt: "Hero image 5" },
+  { src: "/home/IMG-20261011-WA0250.jpg", alt: "Hero image 6" },
 ];
 
 const participationSteps = [
