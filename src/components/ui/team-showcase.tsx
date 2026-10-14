@@ -23,15 +23,10 @@ type TeamShowcaseProps = {
 
 export function TeamShowcase({ members, className }: TeamShowcaseProps) {
   return (
-    <div
-      className={cn(
-        "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5",
-        className,
-      )}
-    >
+    <div className={cn("grid grid-cols-2 gap-4 sm:grid-cols-3", className)}>
       {members.map((member, index) => (
         <div key={`${member.name}-${index}`}>
-          <figure className="group relative aspect-square overflow-hidden rounded-xl bg-muted">
+          <figure className="group relative aspect-square overflow-hidden rounded-xs bg-muted">
             {member.image ? (
               <img
                 src={member.image}
@@ -54,7 +49,7 @@ export function TeamShowcase({ members, className }: TeamShowcaseProps) {
               <p className="truncate text-sm font-semibold text-foreground">
                 {member.name}
               </p>
-              <p className="truncate text-sm text-muted-foreground">
+              <p className="text-sm leading-snug break-words text-muted-foreground">
                 {member.designation}
               </p>
             </figcaption>
