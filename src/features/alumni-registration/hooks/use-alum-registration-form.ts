@@ -4,15 +4,36 @@ import { toast } from "sonner";
 
 import { registerAlum } from "../action/register-alum";
 import {
-  registerFormDefaultValues,
+  type RegisterFormValues,
   validatedRegisterSchema,
 } from "../schema/form-schema";
 
 export function useAlumRegistrationForm() {
   const navigate = useNavigate();
+  const defaultValues: RegisterFormValues = {
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    // biome-ignore lint/style/noNonNullAssertion: <I promise this won't affect>
+    gender: null!,
+    batchYear: "",
+    teeShirtSize: "L",
+    academicGroup: "science",
+    studentId: "",
+    referrerRegCode: "",
+    organization: "",
+    department: "",
+    designation: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "Bangladesh",
+  };
 
   const form = useForm({
-    defaultValues: registerFormDefaultValues,
+    defaultValues,
     validators: {
       onChange: validatedRegisterSchema,
     },
