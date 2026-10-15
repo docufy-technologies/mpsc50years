@@ -35,10 +35,6 @@ function requireWorkProfileField(
   return undefined;
 }
 
-function hasAnyWorkProfileValue(...values: Array<string | undefined>): boolean {
-  return values.some((v) => Boolean(v?.trim()));
-}
-
 function FormSection({
   title,
   description,
@@ -265,10 +261,10 @@ function RouteComponent() {
             >
               {(field) => {
                 const formValues = field.form.state.values;
-                const hasAny = hasAnyWorkProfileValue(
-                  field.state.value,
-                  formValues.department,
-                  formValues.designation,
+                const hasAny = Boolean(
+                  field.state.value?.trim() ||
+                    formValues.department?.trim() ||
+                    formValues.designation?.trim(),
                 );
                 return (
                   <FormInputGroup
@@ -299,10 +295,10 @@ function RouteComponent() {
             >
               {(field) => {
                 const formValues = field.form.state.values;
-                const hasAny = hasAnyWorkProfileValue(
-                  field.state.value,
-                  formValues.organization,
-                  formValues.designation,
+                const hasAny = Boolean(
+                  field.state.value?.trim() ||
+                    formValues.organization?.trim() ||
+                    formValues.designation?.trim(),
                 );
                 return (
                   <FormInputGroup
@@ -333,10 +329,10 @@ function RouteComponent() {
             >
               {(field) => {
                 const formValues = field.form.state.values;
-                const hasAny = hasAnyWorkProfileValue(
-                  field.state.value,
-                  formValues.organization,
-                  formValues.department,
+                const hasAny = Boolean(
+                  field.state.value?.trim() ||
+                    formValues.organization?.trim() ||
+                    formValues.department?.trim(),
                 );
                 return (
                   <FormInputGroup
