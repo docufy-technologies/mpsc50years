@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { TEE_SHIRT_SIZE_OPTIONS } from "@/constants";
 
 export const registerSchema = v.object({
   fullName: v.pipe(
@@ -36,7 +37,7 @@ export const registerSchema = v.object({
     }, `Passing year must be between 1976 and ${new Date().getFullYear()}`),
   ),
   teeShirtSize: v.picklist(
-    ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+    TEE_SHIRT_SIZE_OPTIONS,
     "Please select a valid size",
   ),
   academicGroup: v.optional(
@@ -91,37 +92,12 @@ export const validatedRegisterSchema = v.pipe(
   v.check((input) => {
     const hasOrg = Boolean(input.organization?.trim());
     const hasDept = Boolean(input.department?.trim());
-    const hasDesig = Boolean(input.designation?.trim());
+    const hasDesignation = Boolean(input.designation?.trim());
 
-    const count = Number(hasOrg) + Number(hasDept) + Number(hasDesig);
+    const count = Number(hasOrg) + Number(hasDept) + Number(hasDesignation);
     // Either none are filled, or all 3 are filled
     return count === 0 || count === 3;
   }, "If you provide work profile details, please complete all 3 fields: Organization Name, Department, and Designation."),
 );
 
 export type RegisterFormValues = v.InferOutput<typeof validatedRegisterSchema>;
-
-export const registerFormDefaultValues: RegisterFormValues = {
-  fullName: "",
-  email: "",
-  phone: "",
-  password: "",
-  gender: "" as RegisterFormValues["gender"],
-  batchYear: "",
-  teeShirtSize: "L",
-  academicGroup: "science" as
-    | "science"
-    | "humanities"
-    | "business_studies"
-    | undefined,
-  studentId: "",
-  referrerRegCode: "",
-  organization: "",
-  department: "",
-  designation: "",
-  streetAddress: "",
-  city: "",
-  state: "",
-  postalCode: "",
-  country: "Bangladesh",
-};
