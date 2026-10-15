@@ -19,6 +19,7 @@ interface AlumProfileResponse {
     student_id?: string | null;
     batch_year: number;
     tee_shirt_size: string;
+    gender?: string | null;
     academic_group?: string | null;
     registered_at: string;
     work_profile?: {
@@ -80,7 +81,7 @@ function ProfileRouteComponent() {
   }, []);
 
   return (
-    <main className="min-h-screen pt-36 pb-20 px-4 max-w-4xl mx-auto">
+    <main className="min-h-screen pt-36 pb-20 px-8 max-w-4xl mx-auto">
       <div className="border border-border/80 rounded-2xl p-6 sm:p-10 bg-card/60 backdrop-blur-md shadow-sm space-y-8">
         <div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
@@ -165,6 +166,12 @@ function ProfileRouteComponent() {
                   <span className="text-muted-foreground">T-Shirt Size: </span>
                   <span className="font-semibold">
                     {data.profile?.tee_shirt_size || "N/A"}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Gender: </span>
+                  <span className="capitalize">
+                    {data.profile?.gender || "N/A"}
                   </span>
                 </div>
                 <div>

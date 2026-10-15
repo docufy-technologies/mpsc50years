@@ -22,6 +22,7 @@ import { FormSelect } from "@/components/form-select";
 import AnimatedButton from "@/components/ui/animated-button";
 import { FieldGroup } from "@/components/ui/field";
 import { InputGroupText } from "@/components/ui/input-group";
+import { GENDER_OPTIONS } from "@/constants";
 import { fetchBackend } from "@/lib/api";
 
 const registerSchema = v.object({
@@ -49,6 +50,7 @@ const registerSchema = v.object({
     v.minLength(8, "Password must be at least 8 characters"),
     v.maxLength(128, "Password must not exceed 128 characters"),
   ),
+  gender: v.picklist(["male", "female"], "Please select a gender"),
   batchYear: v.pipe(
     v.string("Passing year is required"),
     v.trim(),
@@ -157,6 +159,7 @@ function RouteComponent() {
     email: "",
     phone: "",
     password: "",
+    gender: "" as RegisterFormValues["gender"],
     batchYear: "",
     teeShirtSize: "L",
     academicGroup: "science" as
@@ -200,6 +203,7 @@ function RouteComponent() {
         email: value.email.trim().toLowerCase(),
         phone_number: rawPhone,
         password: value.password,
+        gender: value.gender,
         batch_year: Number.parseInt(value.batchYear.trim(), 10),
         tee_shirt_size: value.teeShirtSize,
         academic_group: value.academicGroup || null,
@@ -265,7 +269,7 @@ function RouteComponent() {
   });
 
   return (
-    <section className="min-h-screen pb-20 pt-32 max-w-3xl px-4 mx-auto">
+    <section className="min-h-screen pb-20 pt-32 max-w-3xl px-8 mx-auto">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold tracking-tight">
           Alumni Registration
@@ -334,6 +338,21 @@ function RouteComponent() {
                   id="password"
                   label="Password"
                   placeholder="Create a password"
+                />
+              )}
+            </form.Field>
+
+            <form.Field name="gender">
+              {(field) => (
+                <FormSelect
+                  field={field}
+                  id="gender"
+                  label="Gender"
+                  triggerClassName="h-8 w-full text-sm capitalize"
+                  items={GENDER_OPTIONS.map((gender) => ({
+                    value: gender,
+                    label: <span className="capitalize">{gender}</span>,
+                  }))}
                 />
               )}
             </form.Field>
@@ -624,7 +643,7 @@ function RouteComponent() {
                 disabled={!canSubmit}
                 className="w-full sm:w-auto px-8"
               >
-                {isSubmitting ? "Submitting..." : "Register as an Alumna"}
+                {isSubmitting ? "Submitting..." : "Register as an Alum"}
               </AnimatedButton>
             )}
           </form.Subscribe>
