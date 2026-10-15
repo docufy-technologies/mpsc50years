@@ -19,7 +19,7 @@ import { FormSelect } from "@/components/form-select";
 import AnimatedButton from "@/components/ui/animated-button";
 import { FieldGroup } from "@/components/ui/field";
 import { InputGroupText } from "@/components/ui/input-group";
-import { GENDER_OPTIONS } from "@/constants";
+import { GENDER_OPTIONS, TEE_SHIRT_SIZE_OPTIONS } from "@/constants";
 import { useAlumRegistrationForm } from "@/features/alumni-registration/hooks/use-alum-registration-form";
 
 /** Cross-field check for the all-or-nothing work profile trio. */
@@ -199,15 +199,10 @@ function RouteComponent() {
                   triggerPrefix={
                     <IconShirt className="size-3.5 text-muted-foreground" />
                   }
-                  items={[
-                    { value: "XS", label: "XS" },
-                    { value: "S", label: "S" },
-                    { value: "M", label: "M" },
-                    { value: "L", label: "L" },
-                    { value: "XL", label: "XL" },
-                    { value: "XXL", label: "XXL" },
-                    { value: "XXXL", label: "XXXL" },
-                  ]}
+                  items={TEE_SHIRT_SIZE_OPTIONS.map((size) => ({
+                    value: size,
+                    label: size,
+                  }))}
                 />
               )}
             </form.Field>

@@ -10,3 +10,8 @@ export const TEE_SHIRT_SIZE_OPTIONS = [
   "XXL",
   "XXXL",
 ] as const;
+export const ACADEMIC_GROUP_OPTIONS = [
+  "science",
+  "humanities",
+  "business_studies",
+] as const;
