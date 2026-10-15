@@ -79,8 +79,8 @@ export function FormSelect({
         )}
       </FieldLabel>
       <Select
-        selectedKey={(field.state.value ?? null) as string | null}
-        onSelectionChange={(key) => field.handleChange(String(key))}
+        value={(field.state.value ?? null) as string | null}
+        onChange={(val) => field.handleChange(val == null ? "" : String(val))}
         onBlur={field.handleBlur}
         className="w-full"
         aria-label={typeof label === "string" ? label : undefined}
