@@ -95,7 +95,7 @@ function RouteComponent() {
           </h1>
         </div>
       </section>
-      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-8 py-20">
         <div className="flex flex-col gap-2">
           <h1>Evolution</h1>
           <p className="text-sm leading-6 text-muted-foreground">
@@ -104,7 +104,7 @@ function RouteComponent() {
         </div>
         <Timeline items={evolution} />
       </section>
-      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-8 py-20">
         <div className="flex flex-col gap-2">
           <h1>Chairmen</h1>
           <p className="text-sm leading-6 text-muted-foreground">
@@ -113,7 +113,7 @@ function RouteComponent() {
         </div>
         <TeamShowcase members={chairmen} />
       </section>
-      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-8 py-20">
         <div className="flex flex-col gap-2">
           <h1>Principal</h1>
           <p className="text-sm leading-6 text-muted-foreground">
@@ -122,7 +122,7 @@ function RouteComponent() {
         </div>
         <TeamShowcase members={[principal]} />
       </section>
-      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-20">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-8 py-20">
         <div className="flex flex-col gap-2">
           <h1>Vice Principals</h1>
           <p className="text-sm leading-6 text-muted-foreground">

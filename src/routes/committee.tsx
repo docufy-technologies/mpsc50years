@@ -39,7 +39,7 @@ function roleGroupNotes(role: Role): string[] {
 
 function RouteComponent() {
   return (
-    <div className="px-4 py-30">
+    <div className="px-8 py-30">
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 pb-16">
         <h1>Committee</h1>
         <p className="text-sm leading-6 text-muted-foreground">
