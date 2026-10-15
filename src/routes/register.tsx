@@ -19,7 +19,11 @@ import { FormSelect } from "@/components/form-select";
 import AnimatedButton from "@/components/ui/animated-button";
 import { FieldGroup } from "@/components/ui/field";
 import { InputGroupText } from "@/components/ui/input-group";
-import { GENDER_OPTIONS, TEE_SHIRT_SIZE_OPTIONS } from "@/constants";
+import {
+  ACADEMIC_GROUP_OPTIONS,
+  GENDER_OPTIONS,
+  TEE_SHIRT_SIZE_OPTIONS,
+} from "@/constants";
 import { useAlumRegistrationForm } from "@/features/alumni-registration/hooks/use-alum-registration-form";
 
 /** Cross-field check for the all-or-nothing work profile trio. */
@@ -181,11 +185,12 @@ function RouteComponent() {
                   id="academic-group"
                   label="Academic Group"
                   optional
-                  items={[
-                    { value: "science", label: "Science" },
-                    { value: "humanities", label: "Humanities" },
-                    { value: "business_studies", label: "Business Studies" },
-                  ]}
+                  items={ACADEMIC_GROUP_OPTIONS.map((g) => ({
+                    value: g,
+                    label: (
+                      <span className="capitalize">{g.replace("_", " ")}</span>
+                    ),
+                  }))}
                 />
               )}
             </form.Field>

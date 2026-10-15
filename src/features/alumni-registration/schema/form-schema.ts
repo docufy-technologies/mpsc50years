@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { TEE_SHIRT_SIZE_OPTIONS } from "@/constants";
+import { ACADEMIC_GROUP_OPTIONS, TEE_SHIRT_SIZE_OPTIONS } from "@/constants";
 
 export const registerSchema = v.object({
   fullName: v.pipe(
@@ -41,10 +41,7 @@ export const registerSchema = v.object({
     "Please select a valid size",
   ),
   academicGroup: v.optional(
-    v.picklist(
-      ["science", "humanities", "business_studies"],
-      "Invalid academic group",
-    ),
+    v.picklist(ACADEMIC_GROUP_OPTIONS, "Invalid academic group"),
   ),
   studentId: v.optional(v.string()),
   referrerRegCode: v.optional(v.string()),
