@@ -52,7 +52,9 @@ export default function Navbar() {
   return (
     <nav className="mx-auto flex w-fit rounded-full border border-muted bg-transparent backdrop-blur-xl z-100 fixed top-4 left-1/2 -translate-x-1/2 px-1 py-1 max-sm:p-1 gap-4 max-sm:gap-0">
       {navLinks.map((l) => (
-        <NavTab to={l.to}>{l.label}</NavTab>
+        <NavTab key={l.to} to={l.to}>
+          {l.label}
+        </NavTab>
       ))}
     </nav>
   );
