@@ -43,7 +43,7 @@ function Home() {
           images={images}
           className="h-[80dvh] w-full bg-background"
         >
-          <div className="relative px-4 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto py-4">
+          <div className="relative px-8 z-10 flex h-full flex-col items-center justify-between text-center max-w-3xl mx-auto py-4">
             <div className="w-full flex flex-col items-center gap-2">
               <div className="flex items-center justify-center gap-2">
                 <img src="/logo.png" alt="MPSC Logo" className="h-20" />
@@ -78,7 +78,7 @@ function Home() {
       </section>
       <section
         id="participation-steps"
-        className="flex flex-col w-full items-center mx-auto max-w-6xl justify-center gap-12 px-4 py-20 md:gap-16 md:py-28 lg:px-8"
+        className="flex flex-col w-full items-center mx-auto max-w-6xl justify-center gap-12 px-8 py-20 md:gap-16 md:py-28"
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
           <h1>

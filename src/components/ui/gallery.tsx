@@ -1,13 +1,6 @@
-import type React from "react";
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import type React from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 export type ImageItem = string | { src: string; alt?: string };
@@ -183,18 +176,18 @@ function blurForPosition(normalized: number, blur: BlurSettings): number {
 
 /**
  * Load image textures one by one (in order) instead of all at once.
- * Returns an array parallel to `srcs` with `null` for not-yet-loaded slots.
+ * Returns an array parallel to `sources` with `null` for not-yet-loaded slots.
  * Each state update mounts one more plane, so the gallery fills in gradually.
  */
 function useProgressiveTextures(
-  srcs: string[],
+  sources: string[],
   enabled: boolean,
   staggerMs: number,
 ) {
   const [textures, setTextures] = useState<(THREE.Texture | null)[]>(() =>
-    srcs.map(() => null),
+    sources.map(() => null),
   );
-  const key = srcs.join("|");
+  const key = sources.join("|");
 
   useEffect(() => {
     const list = key.split("|").filter(Boolean);
@@ -241,7 +234,9 @@ function useProgressiveTextures(
   useEffect(() => {
     const current = textures;
     return () => {
-      current.forEach((t) => t?.dispose());
+      for (const c of current) {
+        c?.dispose();
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -274,11 +269,11 @@ function GalleryScene({
       ),
     [images],
   );
-  const srcs = useMemo(
+  const sources = useMemo(
     () => normalizedImages.map((img) => img.src),
     [normalizedImages],
   );
-  const textures = useProgressiveTextures(srcs, progressive, staggerMs);
+  const textures = useProgressiveTextures(sources, progressive, staggerMs);
 
   const materials = useMemo(
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
@@ -287,7 +282,9 @@ function GalleryScene({
 
   useEffect(() => {
     return () => {
-      materials.forEach((m) => m.dispose());
+      for (const m of materials) {
+        m.dispose();
+      }
     };
   }, [materials]);
 
@@ -431,6 +428,7 @@ function GalleryScene({
         if (!texture) {
           intro = 0;
         } else {
+          // biome-ignore lint/style/noNonNullAssertion: <just works!>
           if (revealAtRef.current[i] == null || revealAtRef.current[i]! < 0) {
             revealAtRef.current[i] = time;
           }
@@ -438,7 +436,7 @@ function GalleryScene({
             (time - (revealAtRef.current[i] ?? time)) /
             Math.max(introDuration, 0.01);
           const clamped = Math.max(0, Math.min(1, t));
-          intro = 1 - Math.pow(1 - clamped, 3);
+          intro = 1 - (1 - clamped) ** 3;
         }
       }
 
