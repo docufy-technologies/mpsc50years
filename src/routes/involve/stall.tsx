@@ -9,9 +9,9 @@ export const Route = createFileRoute("/involve/stall")({
 
 function RouteComponent() {
   return (
-    <div>
+    <div className="w-full">
       <Link
-        to="/involve"
+        to=".."
         className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <IconArrowLeft className="size-4" aria-hidden />

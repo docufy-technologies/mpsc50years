@@ -9,7 +9,7 @@ export const Route = createFileRoute("/involve/sponsor")({
 
 function RouteComponent() {
   return (
-    <div>
+    <div className="w-full">
       <Link
         to="/involve"
         className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
