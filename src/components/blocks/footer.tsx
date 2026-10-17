@@ -5,15 +5,30 @@ import {
   IconBrandX,
   IconMail,
 } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 
+function FooterLink(props: { label: string; to: LinkProps["to"] }) {
+  return (
+    <Link
+      to={props.to}
+      className="text-muted-foreground hover:text-primary block duration-150"
+    >
+      {props.label}
+    </Link>
+  );
+}
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="pb-16">
       <div className="mx-auto max-w-4xl px-6">
+        <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2">
+          <FooterLink label="Terms of Service" to="/terms-and-conditions" />
+          <FooterLink label="Privacy Policy" to="/privacy-policy" />
+        </div>
         {/* Social links */}
+
         <div className="my-5 flex flex-wrap justify-center gap-6 text-sm">
           <a
             href="https://x.com/docufybd"
@@ -62,24 +77,6 @@ export default function Footer() {
           >
             <IconMail />
           </a>
-        </div>
-
-        {/* Legal links */}
-        <div className="mb-4 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/terms-and-conditions"
-            className="text-sm text-muted-foreground hover:text-accent duration-150"
-          >
-            Terms & Conditions
-          </Link>
-        </div>
-        <div className="mb-4 flex justify-center">
-          <Link
-            to="/privacy-policy"
-            className="text-sm text-muted-foreground hover:text-accent duration-150"
-          >
-            Privacy Policy
-          </Link>
         </div>
 
         {/* Copyright */}
