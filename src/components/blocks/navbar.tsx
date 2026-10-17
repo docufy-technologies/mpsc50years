@@ -19,6 +19,10 @@ export const navLinks = [
     label: "Join",
     to: "/register",
   },
+  {
+    label: "Involve",
+    to: "/involve",
+  },
 ] satisfies readonly {
   label: string;
   to: LinkProps["to"];
