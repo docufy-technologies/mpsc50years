@@ -4,10 +4,11 @@ import {
   IconHeartHandshake,
   IconMicrophone,
   IconUsersGroup,
+  type ReactNode,
 } from "@tabler/icons-react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, type LinkProps } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/involve/")({
+export const Route = createFileRoute("/involve")({
   component: RouteComponent,
 });
 
@@ -39,7 +40,12 @@ const OPTIONS = [
       "Take the stage — sing, recite, perform, and entertain the crowd.",
     icon: IconMicrophone,
   },
-] as const;
+] as const satisfies readonly {
+  to: LinkProps["to"];
+  label: string;
+  description: string;
+  icon: (props: React.ComponentProps<"svg">) => ReactNode;
+}[];
 
 function RouteComponent() {
   return (
