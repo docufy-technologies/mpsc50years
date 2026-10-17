@@ -16,6 +16,11 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as InvolveRouteImport } from './routes/involve'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as InvolveIndexRouteImport } from './routes/involve/index'
+import { Route as InvolveOpenmicRouteImport } from './routes/involve/openmic'
+import { Route as InvolveSponsorRouteImport } from './routes/involve/sponsor'
+import { Route as InvolveStallRouteImport } from './routes/involve/stall'
+import { Route as InvolveSubcommitteeRouteImport } from './routes/involve/subcommittee'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,24 +57,58 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvolveIndexRoute = InvolveIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InvolveRoute,
+} as any)
+const InvolveOpenmicRoute = InvolveOpenmicRouteImport.update({
+  id: '/openmic',
+  path: '/openmic',
+  getParentRoute: () => InvolveRoute,
+} as any)
+const InvolveSponsorRoute = InvolveSponsorRouteImport.update({
+  id: '/sponsor',
+  path: '/sponsor',
+  getParentRoute: () => InvolveRoute,
+} as any)
+const InvolveStallRoute = InvolveStallRouteImport.update({
+  id: '/stall',
+  path: '/stall',
+  getParentRoute: () => InvolveRoute,
+} as any)
+const InvolveSubcommitteeRoute = InvolveSubcommitteeRouteImport.update({
+  id: '/subcommittee',
+  path: '/subcommittee',
+  getParentRoute: () => InvolveRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
-  '/involve': typeof InvolveRoute
+  '/involve': typeof InvolveRouteWithChildren
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/involve/openmic': typeof InvolveOpenmicRoute
+  '/involve/sponsor': typeof InvolveSponsorRoute
+  '/involve/stall': typeof InvolveStallRoute
+  '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/involve/': typeof InvolveIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
-  '/involve': typeof InvolveRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/involve/openmic': typeof InvolveOpenmicRoute
+  '/involve/sponsor': typeof InvolveSponsorRoute
+  '/involve/stall': typeof InvolveStallRoute
+  '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/involve': typeof InvolveIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,9 +116,14 @@ export interface FileRoutesById {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
-  '/involve': typeof InvolveRoute
+  '/involve': typeof InvolveRouteWithChildren
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/involve/openmic': typeof InvolveOpenmicRoute
+  '/involve/sponsor': typeof InvolveSponsorRoute
+  '/involve/stall': typeof InvolveStallRoute
+  '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/involve/': typeof InvolveIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,15 +135,24 @@ export interface FileRouteTypes {
     | '/involve'
     | '/profile'
     | '/register'
+    | '/involve/openmic'
+    | '/involve/sponsor'
+    | '/involve/stall'
+    | '/involve/subcommittee'
+    | '/involve/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about-mpsc'
     | '/committee'
     | '/faq'
-    | '/involve'
     | '/profile'
     | '/register'
+    | '/involve/openmic'
+    | '/involve/sponsor'
+    | '/involve/stall'
+    | '/involve/subcommittee'
+    | '/involve'
   id:
     | '__root__'
     | '/'
@@ -109,6 +162,11 @@ export interface FileRouteTypes {
     | '/involve'
     | '/profile'
     | '/register'
+    | '/involve/openmic'
+    | '/involve/sponsor'
+    | '/involve/stall'
+    | '/involve/subcommittee'
+    | '/involve/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,7 +174,7 @@ export interface RootRouteChildren {
   AboutMpscRoute: typeof AboutMpscRoute
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
-  InvolveRoute: typeof InvolveRoute
+  InvolveRoute: typeof InvolveRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -172,15 +230,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/involve/': {
+      id: '/involve/'
+      path: '/'
+      fullPath: '/involve/'
+      preLoaderRoute: typeof InvolveIndexRouteImport
+      parentRoute: typeof InvolveRoute
+    }
+    '/involve/openmic': {
+      id: '/involve/openmic'
+      path: '/openmic'
+      fullPath: '/involve/openmic'
+      preLoaderRoute: typeof InvolveOpenmicRouteImport
+      parentRoute: typeof InvolveRoute
+    }
+    '/involve/sponsor': {
+      id: '/involve/sponsor'
+      path: '/sponsor'
+      fullPath: '/involve/sponsor'
+      preLoaderRoute: typeof InvolveSponsorRouteImport
+      parentRoute: typeof InvolveRoute
+    }
+    '/involve/stall': {
+      id: '/involve/stall'
+      path: '/stall'
+      fullPath: '/involve/stall'
+      preLoaderRoute: typeof InvolveStallRouteImport
+      parentRoute: typeof InvolveRoute
+    }
+    '/involve/subcommittee': {
+      id: '/involve/subcommittee'
+      path: '/subcommittee'
+      fullPath: '/involve/subcommittee'
+      preLoaderRoute: typeof InvolveSubcommitteeRouteImport
+      parentRoute: typeof InvolveRoute
+    }
   }
 }
+
+interface InvolveRouteChildren {
+  InvolveOpenmicRoute: typeof InvolveOpenmicRoute
+  InvolveSponsorRoute: typeof InvolveSponsorRoute
+  InvolveStallRoute: typeof InvolveStallRoute
+  InvolveSubcommitteeRoute: typeof InvolveSubcommitteeRoute
+  InvolveIndexRoute: typeof InvolveIndexRoute
+}
+
+const InvolveRouteChildren: InvolveRouteChildren = {
+  InvolveOpenmicRoute: InvolveOpenmicRoute,
+  InvolveSponsorRoute: InvolveSponsorRoute,
+  InvolveStallRoute: InvolveStallRoute,
+  InvolveSubcommitteeRoute: InvolveSubcommitteeRoute,
+  InvolveIndexRoute: InvolveIndexRoute,
+}
+
+const InvolveRouteWithChildren =
+  InvolveRoute._addFileChildren(InvolveRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutMpscRoute: AboutMpscRoute,
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
-  InvolveRoute: InvolveRoute,
+  InvolveRoute: InvolveRouteWithChildren,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
 }
