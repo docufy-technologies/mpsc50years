@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutMpscRouteImport } from './routes/about-mpsc'
 import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as InvolveRouteImport } from './routes/involve'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
 
@@ -36,6 +37,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvolveRoute = InvolveRouteImport.update({
+  id: '/involve',
+  path: '/involve',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/involve': typeof InvolveRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/involve': typeof InvolveRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
@@ -69,21 +77,36 @@ export interface FileRoutesById {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/involve': typeof InvolveRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about-mpsc' | '/committee' | '/faq' | '/profile' | '/register'
+    | '/'
+    | '/about-mpsc'
+    | '/committee'
+    | '/faq'
+    | '/involve'
+    | '/profile'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about-mpsc' | '/committee' | '/faq' | '/profile' | '/register'
+  to:
+    | '/'
+    | '/about-mpsc'
+    | '/committee'
+    | '/faq'
+    | '/involve'
+    | '/profile'
+    | '/register'
   id:
     | '__root__'
     | '/'
     | '/about-mpsc'
     | '/committee'
     | '/faq'
+    | '/involve'
     | '/profile'
     | '/register'
   fileRoutesById: FileRoutesById
@@ -93,6 +116,7 @@ export interface RootRouteChildren {
   AboutMpscRoute: typeof AboutMpscRoute
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
+  InvolveRoute: typeof InvolveRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -127,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/involve': {
+      id: '/involve'
+      path: '/involve'
+      fullPath: '/involve'
+      preLoaderRoute: typeof InvolveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -149,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutMpscRoute: AboutMpscRoute,
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
+  InvolveRoute: InvolveRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
 }
