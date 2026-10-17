@@ -5,6 +5,7 @@ import {
   IconBrandX,
   IconMail,
 } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -61,6 +62,16 @@ export default function Footer() {
           >
             <IconMail />
           </a>
+        </div>
+
+        {/* Legal links */}
+        <div className="mb-4 flex justify-center">
+          <Link
+            to="/privacy-policy"
+            className="text-sm text-muted-foreground hover:text-accent duration-150"
+          >
+            Privacy Policy
+          </Link>
         </div>
 
         {/* Copyright */}
