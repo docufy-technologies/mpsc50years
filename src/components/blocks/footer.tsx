@@ -65,6 +65,12 @@ export default function Footer() {
         </div>
 
         {/* Legal links */}
+        <div className="mb-4 flex flex-wrap justify-center gap-4">
+          <Link
+            to="/terms-and-conditions"
+            className="text-sm text-muted-foreground hover:text-accent duration-150"
+          >
+            Terms & Conditions
         <div className="mb-4 flex justify-center">
           <Link
             to="/privacy-policy"
