@@ -16,6 +16,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as InvolveRouteImport } from './routes/involve'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as InvolveIndexRouteImport } from './routes/involve/index'
 import { Route as InvolveOpenmicRouteImport } from './routes/involve/openmic'
 import { Route as InvolveSponsorRouteImport } from './routes/involve/sponsor'
@@ -57,6 +58,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InvolveIndexRoute = InvolveIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/involve': typeof InvolveRouteWithChildren
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/involve/openmic': typeof InvolveOpenmicRoute
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/involve/openmic': typeof InvolveOpenmicRoute
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/involve': typeof InvolveRouteWithChildren
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/involve/openmic': typeof InvolveOpenmicRoute
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/involve'
     | '/profile'
     | '/register'
+    | '/terms-and-conditions'
     | '/involve/openmic'
     | '/involve/sponsor'
     | '/involve/stall'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/profile'
     | '/register'
+    | '/terms-and-conditions'
     | '/involve/openmic'
     | '/involve/sponsor'
     | '/involve/stall'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/involve'
     | '/profile'
     | '/register'
+    | '/terms-and-conditions'
     | '/involve/openmic'
     | '/involve/sponsor'
     | '/involve/stall'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   InvolveRoute: typeof InvolveRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/involve/': {
@@ -295,6 +315,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvolveRoute: InvolveRouteWithChildren,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
