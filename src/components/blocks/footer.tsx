@@ -71,6 +71,12 @@ export default function Footer() {
             className="text-sm text-muted-foreground hover:text-accent duration-150"
           >
             Terms & Conditions
+        <div className="mb-4 flex justify-center">
+          <Link
+            to="/privacy-policy"
+            className="text-sm text-muted-foreground hover:text-accent duration-150"
+          >
+            Privacy Policy
           </Link>
         </div>
 
