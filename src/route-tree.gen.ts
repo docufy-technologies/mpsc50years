@@ -13,7 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutMpscRouteImport } from './routes/about-mpsc'
 import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
-import { Route as InvolveRouteImport } from './routes/involve'
+import { Route as InvolveLayoutRouteImport } from './routes/involve/_layout'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -44,7 +44,7 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InvolveRoute = InvolveRouteImport.update({
+const InvolveLayoutRoute = InvolveLayoutRouteImport.update({
   id: '/involve',
   path: '/involve',
   getParentRoute: () => rootRouteImport,
@@ -72,35 +72,35 @@ const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
 const InvolveIndexRoute = InvolveIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => InvolveRoute,
+  getParentRoute: () => InvolveLayoutRoute,
 } as any)
 const InvolveOpenmicRoute = InvolveOpenmicRouteImport.update({
   id: '/openmic',
   path: '/openmic',
-  getParentRoute: () => InvolveRoute,
+  getParentRoute: () => InvolveLayoutRoute,
 } as any)
 const InvolveSponsorRoute = InvolveSponsorRouteImport.update({
   id: '/sponsor',
   path: '/sponsor',
-  getParentRoute: () => InvolveRoute,
+  getParentRoute: () => InvolveLayoutRoute,
 } as any)
 const InvolveStallRoute = InvolveStallRouteImport.update({
   id: '/stall',
   path: '/stall',
-  getParentRoute: () => InvolveRoute,
+  getParentRoute: () => InvolveLayoutRoute,
 } as any)
 const InvolveSubcommitteeRoute = InvolveSubcommitteeRouteImport.update({
   id: '/subcommittee',
   path: '/subcommittee',
-  getParentRoute: () => InvolveRoute,
+  getParentRoute: () => InvolveLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/involve': typeof InvolveLayoutRouteWithChildren
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
-  '/involve': typeof InvolveRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -129,10 +129,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/involve': typeof InvolveLayoutRouteWithChildren
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
-  '/involve': typeof InvolveRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -147,10 +147,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/involve'
     | '/about-mpsc'
     | '/committee'
     | '/faq'
-    | '/involve'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -178,10 +178,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/involve'
     | '/about-mpsc'
     | '/committee'
     | '/faq'
-    | '/involve'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -195,10 +195,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  InvolveLayoutRoute: typeof InvolveLayoutRouteWithChildren
   AboutMpscRoute: typeof AboutMpscRoute
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
-  InvolveRoute: typeof InvolveRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
@@ -239,7 +239,7 @@ declare module '@tanstack/react-router' {
       id: '/involve'
       path: '/involve'
       fullPath: '/involve'
-      preLoaderRoute: typeof InvolveRouteImport
+      preLoaderRoute: typeof InvolveLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy-policy': {
@@ -275,40 +275,40 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/involve/'
       preLoaderRoute: typeof InvolveIndexRouteImport
-      parentRoute: typeof InvolveRoute
+      parentRoute: typeof InvolveLayoutRoute
     }
     '/involve/openmic': {
       id: '/involve/openmic'
       path: '/openmic'
       fullPath: '/involve/openmic'
       preLoaderRoute: typeof InvolveOpenmicRouteImport
-      parentRoute: typeof InvolveRoute
+      parentRoute: typeof InvolveLayoutRoute
     }
     '/involve/sponsor': {
       id: '/involve/sponsor'
       path: '/sponsor'
       fullPath: '/involve/sponsor'
       preLoaderRoute: typeof InvolveSponsorRouteImport
-      parentRoute: typeof InvolveRoute
+      parentRoute: typeof InvolveLayoutRoute
     }
     '/involve/stall': {
       id: '/involve/stall'
       path: '/stall'
       fullPath: '/involve/stall'
       preLoaderRoute: typeof InvolveStallRouteImport
-      parentRoute: typeof InvolveRoute
+      parentRoute: typeof InvolveLayoutRoute
     }
     '/involve/subcommittee': {
       id: '/involve/subcommittee'
       path: '/subcommittee'
       fullPath: '/involve/subcommittee'
       preLoaderRoute: typeof InvolveSubcommitteeRouteImport
-      parentRoute: typeof InvolveRoute
+      parentRoute: typeof InvolveLayoutRoute
     }
   }
 }
 
-interface InvolveRouteChildren {
+interface InvolveLayoutRouteChildren {
   InvolveOpenmicRoute: typeof InvolveOpenmicRoute
   InvolveSponsorRoute: typeof InvolveSponsorRoute
   InvolveStallRoute: typeof InvolveStallRoute
@@ -316,7 +316,7 @@ interface InvolveRouteChildren {
   InvolveIndexRoute: typeof InvolveIndexRoute
 }
 
-const InvolveRouteChildren: InvolveRouteChildren = {
+const InvolveLayoutRouteChildren: InvolveLayoutRouteChildren = {
   InvolveOpenmicRoute: InvolveOpenmicRoute,
   InvolveSponsorRoute: InvolveSponsorRoute,
   InvolveStallRoute: InvolveStallRoute,
@@ -324,15 +324,16 @@ const InvolveRouteChildren: InvolveRouteChildren = {
   InvolveIndexRoute: InvolveIndexRoute,
 }
 
-const InvolveRouteWithChildren =
-  InvolveRoute._addFileChildren(InvolveRouteChildren)
+const InvolveLayoutRouteWithChildren = InvolveLayoutRoute._addFileChildren(
+  InvolveLayoutRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  InvolveLayoutRoute: InvolveLayoutRouteWithChildren,
   AboutMpscRoute: AboutMpscRoute,
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
-  InvolveRoute: InvolveRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,

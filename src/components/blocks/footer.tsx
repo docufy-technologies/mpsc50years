@@ -71,6 +71,8 @@ export default function Footer() {
             className="text-sm text-muted-foreground hover:text-accent duration-150"
           >
             Terms & Conditions
+          </Link>
+        </div>
         <div className="mb-4 flex justify-center">
           <Link
             to="/privacy-policy"

@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { createFileRoute, Link, type LinkProps } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/involve")({
+export const Route = createFileRoute("/involve/")({
   component: RouteComponent,
 });
 
