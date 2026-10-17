@@ -11,7 +11,7 @@ function FooterLink(props: { label: string; to: LinkProps["to"] }) {
   return (
     <Link
       to={props.to}
-      className="text-muted-foreground text-sm hover:text-primary block duration-150"
+      className="text-muted-foreground hover:text-primary block duration-150"
     >
       {props.label}
     </Link>
