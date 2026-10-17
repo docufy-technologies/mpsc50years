@@ -60,8 +60,8 @@ function Home() {
                 <img src="/mpsc.png" alt="MPSC Logo" className="h-14" />
                 <small>Organizer</small>
               </div>
-              <small className="text-muted-foreground max-sm:max-w-[80%] text-center">
-                Reserve your spot by clicking the button. Have questions?{" "}
+              <small className="text-muted-foreground font-medium max-sm:max-w-[80%] text-center">
+                Have questions?{" "}
                 <Link to="/faq" className="border-b border-primary">
                   Check FAQ
                 </Link>
