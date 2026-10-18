@@ -13,7 +13,7 @@ import {
   IconShirt,
   IconUsers,
 } from "@tabler/icons-react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import AnimatedButton from "@/components/ui/animated-button";
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/profile")({
 
 function ProfileRouteComponent() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) return null;
   const profile = user.profile;
@@ -81,14 +82,26 @@ function ProfileRouteComponent() {
                   <span>·</span>
                   <span className="capitalize">{user.status}</span>
                 </div>
-                <AnimatedButton
-                  size="sm"
-                  variant="ghost"
-                  className="max-sm:w-[90%] max-sm:mt-4"
-                  onClick={handleLogout}
-                >
-                  Log out
-                </AnimatedButton>
+                <div className='flex items-center justify-center sm:justify-end gap-2 max-sm:flex-col w-full'>
+                  <AnimatedButton
+                    size="sm"
+                    variant="ghost"
+                    className="max-sm:w-[90%] max-sm:mt-4"
+                    onClick={handleLogout}
+                  >
+                    Log out
+                  </AnimatedButton>
+                  {/* TODO: Implement payment functionality */}
+                  {user.status === 'pending' && (
+                    <AnimatedButton
+                      size="sm"
+                      className="max-sm:w-[90%]"
+                      onClick={() => navigate({ to: "/payment" })}
+                    >
+                      Verify Account
+                    </AnimatedButton>
+                  )}
+                </div>
               </div>
             </div>
           </div>

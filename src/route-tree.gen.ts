@@ -15,6 +15,7 @@ import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as InvolveLayoutRouteImport } from './routes/involve/_layout'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PaymentRouteImport } from './routes/payment'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -24,6 +25,8 @@ import { Route as InvolveOpenmicRouteImport } from './routes/involve/openmic'
 import { Route as InvolveSponsorRouteImport } from './routes/involve/sponsor'
 import { Route as InvolveStallRouteImport } from './routes/involve/stall'
 import { Route as InvolveSubcommitteeRouteImport } from './routes/involve/subcommittee'
+import { Route as PaymentCancelledRouteImport } from './routes/payment/cancelled'
+import { Route as PaymentSuccessRouteImport } from './routes/payment/success'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +56,11 @@ const InvolveLayoutRoute = InvolveLayoutRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
@@ -100,6 +108,16 @@ const InvolveSubcommitteeRoute = InvolveSubcommitteeRouteImport.update({
   path: '/subcommittee',
   getParentRoute: () => InvolveLayoutRoute,
 } as any)
+const PaymentCancelledRoute = PaymentCancelledRouteImport.update({
+  id: '/cancelled',
+  path: '/cancelled',
+  getParentRoute: () => PaymentRoute,
+} as any)
+const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => PaymentRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/payment': typeof PaymentRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -116,6 +135,8 @@ export interface FileRoutesByFullPath {
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
   '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/payment/cancelled': typeof PaymentCancelledRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/involve/': typeof InvolveIndexRoute
 }
 export interface FileRoutesByTo {
@@ -124,6 +145,7 @@ export interface FileRoutesByTo {
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/payment': typeof PaymentRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -132,6 +154,8 @@ export interface FileRoutesByTo {
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
   '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/payment/cancelled': typeof PaymentCancelledRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/involve': typeof InvolveIndexRoute
 }
 export interface FileRoutesById {
@@ -142,6 +166,7 @@ export interface FileRoutesById {
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
+  '/payment': typeof PaymentRouteWithChildren
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -150,6 +175,8 @@ export interface FileRoutesById {
   '/involve/sponsor': typeof InvolveSponsorRoute
   '/involve/stall': typeof InvolveStallRoute
   '/involve/subcommittee': typeof InvolveSubcommitteeRoute
+  '/payment/cancelled': typeof PaymentCancelledRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/involve/': typeof InvolveIndexRoute
 }
 export interface FileRouteTypes {
@@ -161,6 +188,7 @@ export interface FileRouteTypes {
     | '/committee'
     | '/faq'
     | '/login'
+    | '/payment'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -169,6 +197,8 @@ export interface FileRouteTypes {
     | '/involve/sponsor'
     | '/involve/stall'
     | '/involve/subcommittee'
+    | '/payment/cancelled'
+    | '/payment/success'
     | '/involve/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -177,6 +207,7 @@ export interface FileRouteTypes {
     | '/committee'
     | '/faq'
     | '/login'
+    | '/payment'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -185,6 +216,8 @@ export interface FileRouteTypes {
     | '/involve/sponsor'
     | '/involve/stall'
     | '/involve/subcommittee'
+    | '/payment/cancelled'
+    | '/payment/success'
     | '/involve'
   id:
     | '__root__'
@@ -194,6 +227,7 @@ export interface FileRouteTypes {
     | '/committee'
     | '/faq'
     | '/login'
+    | '/payment'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -202,6 +236,8 @@ export interface FileRouteTypes {
     | '/involve/sponsor'
     | '/involve/stall'
     | '/involve/subcommittee'
+    | '/payment/cancelled'
+    | '/payment/success'
     | '/involve/'
   fileRoutesById: FileRoutesById
 }
@@ -212,6 +248,7 @@ export interface RootRouteChildren {
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
   LoginRoute: typeof LoginRoute
+  PaymentRoute: typeof PaymentRouteWithChildren
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
@@ -260,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy-policy': {
@@ -325,6 +369,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvolveSubcommitteeRouteImport
       parentRoute: typeof InvolveLayoutRoute
     }
+    '/payment/cancelled': {
+      id: '/payment/cancelled'
+      path: '/cancelled'
+      fullPath: '/payment/cancelled'
+      preLoaderRoute: typeof PaymentCancelledRouteImport
+      parentRoute: typeof PaymentRoute
+    }
+    '/payment/success': {
+      id: '/payment/success'
+      path: '/success'
+      fullPath: '/payment/success'
+      preLoaderRoute: typeof PaymentSuccessRouteImport
+      parentRoute: typeof PaymentRoute
+    }
   }
 }
 
@@ -348,6 +406,19 @@ const InvolveLayoutRouteWithChildren = InvolveLayoutRoute._addFileChildren(
   InvolveLayoutRouteChildren,
 )
 
+interface PaymentRouteChildren {
+  PaymentCancelledRoute: typeof PaymentCancelledRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
+}
+
+const PaymentRouteChildren: PaymentRouteChildren = {
+  PaymentCancelledRoute: PaymentCancelledRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
+}
+
+const PaymentRouteWithChildren =
+  PaymentRoute._addFileChildren(PaymentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   InvolveLayoutRoute: InvolveLayoutRouteWithChildren,
@@ -355,6 +426,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
   LoginRoute: LoginRoute,
+  PaymentRoute: PaymentRouteWithChildren,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
