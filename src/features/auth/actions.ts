@@ -8,26 +8,6 @@ import {
   loginSchema,
 } from "./schema/auth-schema";
 
-const AUTH_REQUEST_TIMEOUT_MS = 5_000;
-
-function withTimeout(signal?: AbortSignal): AbortSignal {
-  const controller = new AbortController();
-  const timeout = setTimeout(
-    () => controller.abort("Authentication request timed out"),
-    AUTH_REQUEST_TIMEOUT_MS,
-  );
-
-  signal?.addEventListener("abort", () => controller.abort(signal.reason), {
-    once: true,
-  });
-
-  controller.signal.addEventListener("abort", () => clearTimeout(timeout), {
-    once: true,
-  });
-
-  return controller.signal;
-}
-
 function extractErrorDetail(res: Response, errorData: unknown): string {
   if (errorData && typeof errorData === "object" && "detail" in errorData) {
     const detail = (errorData as { detail: unknown }).detail;
@@ -59,7 +39,6 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     method: "GET",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    signal: withTimeout(),
   });
   if (res.status === 401) return null;
   if (!res.ok) {

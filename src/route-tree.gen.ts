@@ -109,9 +109,9 @@ const PaymentIndexRoute = PaymentIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentCancelledRoute = PaymentCancelledRouteImport.update({
-  id: '/cancelled',
-  path: '/cancelled',
-  getParentRoute: () => PaymentRoute,
+  id: '/payment/cancelled',
+  path: '/payment/cancelled',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
   id: '/payment/success',
@@ -252,6 +252,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  PaymentCancelledRoute: typeof PaymentCancelledRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   PaymentIndexRoute: typeof PaymentIndexRoute
 }
@@ -372,10 +373,10 @@ declare module '@tanstack/react-router' {
     }
     '/payment/cancelled': {
       id: '/payment/cancelled'
-      path: '/cancelled'
+      path: '/payment/cancelled'
       fullPath: '/payment/cancelled'
       preLoaderRoute: typeof PaymentCancelledRouteImport
-      parentRoute: typeof PaymentRoute
+      parentRoute: typeof rootRouteImport
     }
     '/payment/success': {
       id: '/payment/success'
@@ -418,6 +419,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
+  PaymentCancelledRoute: PaymentCancelledRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
   PaymentIndexRoute: PaymentIndexRoute,
 }
