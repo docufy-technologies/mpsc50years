@@ -77,8 +77,8 @@ function ProfileRouteComponent() {
               )}
             </div>
             <div className="flex flex-col items-center gap-2 md:items-start w-full">
-              <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-bold">{user.full_name}</h1>
+              <div>
+                <h1 className="mr-2">{user.full_name}</h1>
                 {user.status === "confirmed" && (
                   <IconCircleCheck className="size-6 fill-blue-500 text-white" />
                 )}
@@ -143,11 +143,6 @@ function ProfileRouteComponent() {
                   icon={<IconPhone />}
                   label="Phone"
                   value={user.phone_number}
-                />
-                <InfoRow
-                  icon={<IconCalendar />}
-                  label="Joined on"
-                  value={new Date(user.created_at).toLocaleDateString()}
                 />
                 {profile?.registered_at && (
                   <InfoRow
