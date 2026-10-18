@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TeamShowcase, type TeamMember } from "@/components/ui/team-showcase";
+import { type TeamMember, TeamShowcase } from "@/components/ui/team-showcase";
 import {
   advisingCommittee,
-  steeringCommittee,
-  teamSections,
   type Member,
   type Person,
   type Role,
+  steeringCommittee,
+  teamSections,
 } from "@/data/committee";
 
 export const Route = createFileRoute("/committee")({

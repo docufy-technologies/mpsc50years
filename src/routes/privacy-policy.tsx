@@ -47,7 +47,9 @@ function RouteComponent() {
         <li>Current address or location</li>
         <li>MPSC batch, academic year, section, or group</li>
         <li>Student or alumni-related information</li>
-        <li>Profession, organization, or designation, where voluntarily provided</li>
+        <li>
+          Profession, organization, or designation, where voluntarily provided
+        </li>
         <li>Emergency contact information</li>
         <li>Registration details</li>
         <li>Ticket or participant identification information</li>
@@ -71,14 +73,19 @@ function RouteComponent() {
         </li>
         <li>Providing event updates and important notices;</li>
         <li>Managing venue access and event security;</li>
-        <li>
-          Distributing merchandise, souvenirs, or registration materials;
-        </li>
+        <li>Distributing merchandise, souvenirs, or registration materials;</li>
         <li>Responding to inquiries and support requests;</li>
-        <li>Maintaining administrative records relating to the Golden Jubilee;</li>
+        <li>
+          Maintaining administrative records relating to the Golden Jubilee;
+        </li>
         <li>Improving event planning and participant experience;</li>
-        <li>Preventing fraudulent, duplicate, or unauthorized registrations;</li>
-        <li>Preparing statistical or aggregated reports about event participation; and</li>
+        <li>
+          Preventing fraudulent, duplicate, or unauthorized registrations;
+        </li>
+        <li>
+          Preparing statistical or aggregated reports about event participation;
+          and
+        </li>
         <li>
           Supporting legitimate institutional and alumni-related activities
           associated with MPSC.
@@ -234,8 +241,8 @@ function RouteComponent() {
       <h2>9. Data Retention</h2>
 
       <p>
-        Personal information may be retained for as long as reasonably
-        necessary for:
+        Personal information may be retained for as long as reasonably necessary
+        for:
       </p>
 
       <ul>
@@ -245,7 +252,9 @@ function RouteComponent() {
         <li>Fraud prevention;</li>
         <li>Institutional recordkeeping;</li>
         <li>Historical or archival purposes; and</li>
-        <li>Compliance with applicable legal or administrative requirements.</li>
+        <li>
+          Compliance with applicable legal or administrative requirements.
+        </li>
       </ul>
 
       <p>
@@ -256,11 +265,13 @@ function RouteComponent() {
       <h2>10. Cookies & Website Information</h2>
 
       <p>
-        The website may use cookies or similar technologies to support
-        essential website functionality and improve user experience.
+        The website may use cookies or similar technologies to support essential
+        website functionality and improve user experience.
       </p>
 
-      <p>Certain technical information may be collected automatically, including:</p>
+      <p>
+        Certain technical information may be collected automatically, including:
+      </p>
 
       <ul>
         <li>IP address;</li>
@@ -310,9 +321,9 @@ function RouteComponent() {
       </p>
 
       <p>
-        Where information relating to minors is collected, it should be
-        provided with appropriate parental, guardian, institutional, or other
-        required authorization where applicable.
+        Where information relating to minors is collected, it should be provided
+        with appropriate parental, guardian, institutional, or other required
+        authorization where applicable.
       </p>
 
       <p>
@@ -322,9 +333,7 @@ function RouteComponent() {
 
       <h2>13. Your Information</h2>
 
-      <p>
-        Participants may contact the event organizing team if they need to:
-      </p>
+      <p>Participants may contact the event organizing team if they need to:</p>
 
       <ul>
         <li>Correct inaccurate registration information;</li>
@@ -396,9 +405,9 @@ function RouteComponent() {
       <hr />
 
       <p>
-        By using this website, registering for the event, or submitting
-        personal information, you acknowledge that you have read and understood
-        this Privacy Policy.
+        By using this website, registering for the event, or submitting personal
+        information, you acknowledge that you have read and understood this
+        Privacy Policy.
       </p>
 
       <p>

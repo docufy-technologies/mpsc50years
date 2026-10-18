@@ -14,6 +14,7 @@ import { Route as AboutMpscRouteImport } from './routes/about-mpsc'
 import { Route as CommitteeRouteImport } from './routes/committee'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as InvolveLayoutRouteImport } from './routes/involve/_layout'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -47,6 +48,11 @@ const FaqRoute = FaqRouteImport.update({
 const InvolveLayoutRoute = InvolveLayoutRouteImport.update({
   id: '/involve',
   path: '/involve',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/about-mpsc': typeof AboutMpscRoute
   '/committee': typeof CommitteeRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/about-mpsc'
     | '/committee'
     | '/faq'
+    | '/login'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/about-mpsc'
     | '/committee'
     | '/faq'
+    | '/login'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/about-mpsc'
     | '/committee'
     | '/faq'
+    | '/login'
     | '/privacy-policy'
     | '/profile'
     | '/register'
@@ -199,6 +211,7 @@ export interface RootRouteChildren {
   AboutMpscRoute: typeof AboutMpscRoute
   CommitteeRoute: typeof CommitteeRoute
   FaqRoute: typeof FaqRoute
+  LoginRoute: typeof LoginRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/involve'
       fullPath: '/involve'
       preLoaderRoute: typeof InvolveLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy-policy': {
@@ -334,6 +354,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutMpscRoute: AboutMpscRoute,
   CommitteeRoute: CommitteeRoute,
   FaqRoute: FaqRoute,
+  LoginRoute: LoginRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,

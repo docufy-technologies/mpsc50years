@@ -51,8 +51,8 @@ function RouteComponent() {
         </li>
         <li>
           The organizers reserve the right to reject, suspend, or cancel
-          registrations containing false, misleading, duplicate, or
-          unverifiable information.
+          registrations containing false, misleading, duplicate, or unverifiable
+          information.
         </li>
       </ul>
 
@@ -60,8 +60,8 @@ function RouteComponent() {
 
       <ul>
         <li>
-          All applicable registration fees, ticket prices, merchandise costs,
-          or other charges will be displayed on the website before payment.
+          All applicable registration fees, ticket prices, merchandise costs, or
+          other charges will be displayed on the website before payment.
         </li>
         <li>
           Participants are responsible for verifying their information and
@@ -89,10 +89,10 @@ function RouteComponent() {
       </p>
 
       <p>
-        If the event is cancelled, postponed, rescheduled, or materially
-        changed due to circumstances beyond the organizers' reasonable control,
-        the organizers will communicate the applicable arrangements through
-        official channels.
+        If the event is cancelled, postponed, rescheduled, or materially changed
+        due to circumstances beyond the organizers' reasonable control, the
+        organizers will communicate the applicable arrangements through official
+        channels.
       </p>
 
       <p>
@@ -105,8 +105,8 @@ function RouteComponent() {
 
       <p>
         The organizers reserve the right to change the event schedule, venue
-        arrangements, activities, performers, speakers, program sequence,
-        access procedures, or other event components when reasonably necessary.
+        arrangements, activities, performers, speakers, program sequence, access
+        procedures, or other event components when reasonably necessary.
       </p>
 
       <p>
@@ -117,9 +117,9 @@ function RouteComponent() {
       <h2>6. Entry & Identification</h2>
 
       <p>
-        Participants may be required to present their registration
-        confirmation, ticket, QR code, identification document, event pass, or
-        other proof of registration to enter designated event areas.
+        Participants may be required to present their registration confirmation,
+        ticket, QR code, identification document, event pass, or other proof of
+        registration to enter designated event areas.
       </p>
 
       <p>
@@ -132,8 +132,8 @@ function RouteComponent() {
         <li>Attempts to enter using another person's credentials;</li>
         <li>Violates event rules or security requirements; or</li>
         <li>
-          Engages in conduct that may threaten the safety, dignity, or
-          enjoyment of others.
+          Engages in conduct that may threaten the safety, dignity, or enjoyment
+          of others.
         </li>
       </ul>
 
@@ -147,15 +147,15 @@ function RouteComponent() {
 
       <p>
         Harassment, violence, abusive behaviour, deliberate disruption, damage
-        to property, unlawful activities, or conduct considered inappropriate
-        by the organizers may result in removal from the event without refund.
+        to property, unlawful activities, or conduct considered inappropriate by
+        the organizers may result in removal from the event without refund.
       </p>
 
       <h2>8. Photography, Video & Media</h2>
 
       <p>
-        The MPSC 50 Years Celebration is a public institutional event and may
-        be photographed, filmed, recorded, or livestreamed.
+        The MPSC 50 Years Celebration is a public institutional event and may be
+        photographed, filmed, recorded, or livestreamed.
       </p>
 
       <p>
@@ -193,8 +193,8 @@ function RouteComponent() {
 
       <p>
         Personal information will only be handled for legitimate purposes
-        related to the event and associated institutional activities, subject
-        to applicable requirements.
+        related to the event and associated institutional activities, subject to
+        applicable requirements.
       </p>
 
       <p>
@@ -218,9 +218,9 @@ function RouteComponent() {
       </p>
 
       <p>
-        Content from this website may not be reproduced, commercially
-        exploited, modified, distributed, or represented as official MPSC
-        material without appropriate authorization.
+        Content from this website may not be reproduced, commercially exploited,
+        modified, distributed, or represented as official MPSC material without
+        appropriate authorization.
       </p>
 
       <h2>11. User-Submitted Content</h2>
@@ -234,8 +234,8 @@ function RouteComponent() {
       <p>
         By submitting content for the celebration, participants may authorize
         the organizers to use it for event displays, publications, archives,
-        websites, social media, exhibitions, and other activities connected
-        with the Golden Jubilee, unless otherwise specified.
+        websites, social media, exhibitions, and other activities connected with
+        the Golden Jubilee, unless otherwise specified.
       </p>
 
       <p>
@@ -254,9 +254,9 @@ function RouteComponent() {
 
       <p>
         MPSC does not control all external platforms and is not responsible for
-        their availability, content, security, policies, or independent
-        actions. Users should review the applicable terms of those services
-        when using them.
+        their availability, content, security, policies, or independent actions.
+        Users should review the applicable terms of those services when using
+        them.
       </p>
 
       <h2>13. Event Safety & Personal Responsibility</h2>
@@ -269,9 +269,9 @@ function RouteComponent() {
       <p>
         While reasonable measures will be taken to provide a safe and properly
         managed event, the organizers cannot accept responsibility for loss,
-        theft, damage, injury, delay, or disruption resulting from
-        circumstances outside their reasonable control, except where
-        responsibility cannot lawfully be excluded.
+        theft, damage, injury, delay, or disruption resulting from circumstances
+        outside their reasonable control, except where responsibility cannot
+        lawfully be excluded.
       </p>
 
       <p>
@@ -309,23 +309,23 @@ function RouteComponent() {
       </p>
 
       <p>
-        Such activity may result in cancellation of registration, restriction
-        of access, and further action where appropriate.
+        Such activity may result in cancellation of registration, restriction of
+        access, and further action where appropriate.
       </p>
 
       <h2>17. Limitation of Liability</h2>
 
       <p>
         To the extent permitted by applicable law, MPSC, the event organizing
-        committee, volunteers, representatives, and authorized partners will
-        not be liable for indirect or consequential loss arising from use of
-        the website, participation in the event, third-party services, or
+        committee, volunteers, representatives, and authorized partners will not
+        be liable for indirect or consequential loss arising from use of the
+        website, participation in the event, third-party services, or
         circumstances outside the organizers' reasonable control.
       </p>
 
       <p>
-        Nothing in these Terms & Conditions is intended to exclude any
-        liability that cannot legally be excluded.
+        Nothing in these Terms & Conditions is intended to exclude any liability
+        that cannot legally be excluded.
       </p>
 
       <h2>18. Amendments</h2>
@@ -336,16 +336,13 @@ function RouteComponent() {
         requirements, or applicable obligations.
       </p>
 
-      <p>
-        The latest version published on the official website will apply.
-      </p>
+      <p>The latest version published on the official website will apply.</p>
 
       <h2>19. Governing Rules</h2>
 
       <p>
-        These Terms & Conditions and participation in the event will be
-        governed by the applicable laws and regulations of{" "}
-        <strong>Bangladesh</strong>.
+        These Terms & Conditions and participation in the event will be governed
+        by the applicable laws and regulations of <strong>Bangladesh</strong>.
       </p>
 
       <h2>20. Contact</h2>
@@ -360,9 +357,9 @@ function RouteComponent() {
       <hr />
 
       <p>
-        By registering for the event, completing a payment, or continuing to
-        use this website, you acknowledge that you have read, understood, and
-        agreed to these Terms & Conditions.
+        By registering for the event, completing a payment, or continuing to use
+        this website, you acknowledge that you have read, understood, and agreed
+        to these Terms & Conditions.
       </p>
 
       <p>

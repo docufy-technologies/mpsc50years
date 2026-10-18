@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Gallery from "@/components/ui/gallery";
-import { TeamShowcase, type TeamMember } from "@/components/ui/team-showcase";
+import { type TeamMember, TeamShowcase } from "@/components/ui/team-showcase";
 import { Timeline } from "@/components/ui/timeline";
 
 export const Route = createFileRoute("/about-mpsc")({

@@ -2,6 +2,8 @@ import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
+import { getCurrentUser } from "@/features/auth/actions";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { registerAlum } from "../action/register-alum";
 import {
   type RegisterFormValues,
@@ -10,6 +12,7 @@ import {
 
 export function useAlumRegistrationForm() {
   const navigate = useNavigate();
+  const auth = useAuth();
   const defaultValues: RegisterFormValues = {
     fullName: "",
     email: "",
@@ -40,6 +43,7 @@ export function useAlumRegistrationForm() {
     onSubmit: async ({ value, formApi }) => {
       try {
         await registerAlum(value);
+        auth.setUser(await getCurrentUser());
         toast.success(
           "Registration successful! Welcome to the Golden Jubilee.",
         );
