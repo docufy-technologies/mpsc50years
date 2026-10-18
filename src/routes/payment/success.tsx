@@ -21,8 +21,8 @@ function PaymentSuccessRouteComponent() {
         <IconCircleCheck className="mx-auto mb-4 size-12 text-green-600" />
         <h1 className="text-2xl font-bold">Payment successful</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Your payment was verified successfully. Your registration is now
-          ready for confirmation.
+        Your payment was verified successfully and your account is now
+        confirmed.
         </p>
         <Link to="/profile" className="mt-8 block">
           <AnimatedButton className="w-full">View your profile</AnimatedButton>

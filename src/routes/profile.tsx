@@ -71,18 +71,21 @@ function ProfileRouteComponent() {
                 )}
               </div>
               <div className="flex max-sm:flex-col justify-between w-full items-center">
-                <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground md:justify-start">
-                  <span className="font-semibold text-foreground">
-                    {profile?.batch_year ?? "N/A"} Batch
+                <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground md:flex-nowrap md:justify-start">
+                  <span className="font-semibold">
+                    {profile?.batch_year ?? "N/A"}
                   </span>
+                  Batch
                   <span>·</span>
                   <span className="capitalize">
                     {profile?.academic_group ?? "Alumni"}
                   </span>
                   <span>·</span>
-                  <span className="capitalize">{user.status}</span>
+                  <span className="font-semibold capitalize">
+                    {user.status}
+                  </span>
                 </div>
-                <div className='flex items-center justify-center sm:justify-end gap-2 max-sm:flex-col w-full'>
+                <div className="flex w-full items-center justify-center gap-2 max-sm:flex-col sm:w-auto sm:justify-end">
                   <AnimatedButton
                     size="sm"
                     variant="ghost"
@@ -185,6 +188,12 @@ function ProfileRouteComponent() {
               icon={<IconCreditCard />}
               label="Payment"
               value={user.payment.has_paid ? "Paid" : "Not paid"}
+              valueClassName="capitalize"
+            />
+            <InfoRow
+              icon={<IconCircleCheck />}
+              label="Account status"
+              value={user.status}
               valueClassName="capitalize"
             />
             <InfoRow

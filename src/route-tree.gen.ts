@@ -114,9 +114,9 @@ const PaymentCancelledRoute = PaymentCancelledRouteImport.update({
   getParentRoute: () => PaymentRoute,
 } as any)
 const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => PaymentRoute,
+  id: '/payment/success',
+  path: '/payment/success',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -252,6 +252,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
   PaymentIndexRoute: typeof PaymentIndexRoute
 }
 
@@ -378,10 +379,10 @@ declare module '@tanstack/react-router' {
     }
     '/payment/success': {
       id: '/payment/success'
-      path: '/success'
+      path: '/payment/success'
       fullPath: '/payment/success'
       preLoaderRoute: typeof PaymentSuccessRouteImport
-      parentRoute: typeof PaymentRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -417,6 +418,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
   PaymentIndexRoute: PaymentIndexRoute,
 }
 export const routeTree = rootRouteImport
