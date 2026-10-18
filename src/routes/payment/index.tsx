@@ -14,7 +14,7 @@ const paymentSessionSchema = v.object({
   session_key: v.string(),
 });
 
-export const Route = createFileRoute("/payment")({
+export const Route = createFileRoute("/payment/")({
   component: PaymentRouteComponent,
 });
 
@@ -59,10 +59,8 @@ function PaymentRouteComponent() {
       <main className="mx-auto flex min-h-screen w-full max-w-lg items-center px-8 py-36">
         <section className="w-full p-8 text-center">
           <IconCreditCard className="mx-auto mb-4 size-10 text-primary" />
-          <h1 className="text-2xl font-bold">Complete your payment</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            You will be redirected to SSLCommerz to securely complete the
-            verification payment.
+            You will be redirected to securely complete payment.
           </p>
           <AnimatedButton
             className="mt-8 w-full"
