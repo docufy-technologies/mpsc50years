@@ -1,14 +1,17 @@
 import {
   IconBriefcase,
   IconCalendar,
+  IconCalendarCheck,
   IconChecks,
   IconCircleCheck,
+  IconCreditCard,
   IconGenderBigender,
   IconHome,
   IconId,
   IconMail,
   IconPhone,
   IconShirt,
+  IconUsers,
 } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
@@ -81,7 +84,7 @@ function ProfileRouteComponent() {
                 <AnimatedButton
                   size="sm"
                   variant="ghost"
-                  className="max-sm:w-[90%] mt-4"
+                  className="max-sm:w-[90%] max-sm:mt-4"
                   onClick={handleLogout}
                 >
                   Log out
@@ -89,7 +92,7 @@ function ProfileRouteComponent() {
               </div>
             </div>
           </div>
-          <div className="my-6 border-t" />
+          <div className="mt-1 mb-2 border-t" />
           <div id="basic-info" className="space-y-3 pb-6 text-sm">
             <InfoRow icon={<IconMail />} label="Email" value={user.email} />
             <InfoRow
@@ -102,6 +105,13 @@ function ProfileRouteComponent() {
               label="Joined on"
               value={new Date(user.created_at).toLocaleDateString()}
             />
+            {profile?.registered_at && (
+              <InfoRow
+                icon={<IconCalendarCheck />}
+                label="Registered on"
+                value={new Date(profile.registered_at).toLocaleDateString()}
+              />
+            )}
             <InfoRow
               icon={<IconChecks />}
               label="Registration code"
@@ -132,6 +142,7 @@ function ProfileRouteComponent() {
                   profile?.address.street_address,
                   profile?.address.city,
                   profile?.address.state_or_province,
+                  profile?.address.postal_code,
                   profile?.address.country,
                 ]
                   .filter(Boolean)
@@ -157,6 +168,48 @@ function ProfileRouteComponent() {
                 />
               </>
             )}
+            <InfoRow
+              icon={<IconCreditCard />}
+              label="Payment"
+              value={user.payment.has_paid ? "Paid" : "Not paid"}
+              valueClassName="capitalize"
+            />
+            <InfoRow
+              icon={<IconCreditCard />}
+              label="Payment status"
+              value={user.payment.latest_status}
+              valueClassName="capitalize"
+            />
+            {user.payment.amount !== null && (
+              <InfoRow
+                icon={<IconCreditCard />}
+                label="Payment amount"
+                value={user.payment.amount.toLocaleString()}
+              />
+            )}
+            {user.payment.transaction_reference && (
+              <InfoRow
+                icon={<IconCreditCard />}
+                label="Transaction reference"
+                value={user.payment.transaction_reference}
+              />
+            )}
+            {user.payment.paid_at && (
+              <InfoRow
+                icon={<IconCalendarCheck />}
+                label="Paid on"
+                value={new Date(user.payment.paid_at).toLocaleDateString()}
+              />
+            )}
+            {user.acquaintances.map((acquaintance) => (
+              <InfoRow
+                key={acquaintance.uuid}
+                icon={<IconUsers />}
+                label={acquaintance.relation}
+                value={`${acquaintance.full_name} (${acquaintance.age_group})`}
+                valueClassName="capitalize"
+              />
+            ))}
           </div>
         </div>
       </main>
