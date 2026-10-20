@@ -1,6 +1,5 @@
 import {
   IconBriefcase,
-  IconCalendar,
   IconCalendarCheck,
   IconChecks,
   IconCircleCheck,
